@@ -2,11 +2,11 @@
   "name": "candido-middleware",
   "version": "1.0.0",
   "description": "Middleware written in Node.js using the Express.js framework, designed to facilitate secure and efficient communication between a client application and a server",
-  "main": "dist/index.js",
+  "main": "dist/app.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "start": "node dist/app.js",
+    "dev": "nodemon src/app.ts"
   },
   "repository": {
     "type": "git",
