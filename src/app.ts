@@ -3,16 +3,16 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 
 import routes from "./routes/routes";
-import { errorHandler } from "./middleware/errorHandler";
+import { errorHandler } from "./utils/errorHandler";
 
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
-app.use("/api", routes);
+app.use("/", routes);
 
 app.use(errorHandler);
 

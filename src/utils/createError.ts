@@ -1,6 +1,4 @@
-export interface CustomError extends Error {
-  status?: number;
-}
+import { CustomError } from "../models/utils/CustomError";
 
 export const createError = (status: number, message: string): CustomError => {
   const error = new Error(message) as CustomError;
