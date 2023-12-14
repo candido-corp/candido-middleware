@@ -8,8 +8,8 @@ import { controllerLogout } from "../controllers/auth/controllerLogout";
 
 const router = express.Router();
 
-router.use(EnumRoutes.LOGIN, controllerLogin);
-router.use(EnumRoutes.REGISTER, controllerRegister);
-router.use(EnumRoutes.LOGOUT, controllerLogout);
+router.post(EnumRoutes.LOGIN, controllerLogin);
+router.post(EnumRoutes.REGISTER, controllerRegister);
+router.get(EnumRoutes.LOGOUT, controllerLogout);
 
 export default router;

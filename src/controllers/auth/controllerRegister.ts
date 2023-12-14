@@ -8,14 +8,18 @@ export const controllerRegister = (
   next: NextFunction
 ) => {
   try {
-    const { username, password }: RequestRegisterData = req.body;
+    const { username, password, confirm_password }: RequestRegisterData =
+      req.body;
 
-    if (!username || !password) {
-      throw createError(400, "Missing username or password");
+    if (!username || !password || !confirm_password) {
+      throw createError(
+        400,
+        "Missing username or password or confirm_password"
+      );
     }
 
     // Qui puoi aggiungere la logica per inviare i dati al server o per autenticare l'utente
-    console.log("Register Data:", username, password);
+    console.log("Register Data:", username, password, confirm_password);
 
     // Esempio di risposta
     res.status(200).send({});
