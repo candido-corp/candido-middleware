@@ -3,4 +3,5 @@ export enum EnumRoutes {
   LOGIN = APIV1 + "/auth/login",
   REGISTER = APIV1 + "/auth/register",
   LOGOUT = APIV1 + "/auth/logout",
+  REFRESH_TOKEN = APIV1 + "/auth/refresh-token",
 }
