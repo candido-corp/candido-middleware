@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createError } from "../../utils/createError";
+import { StatusCodes } from "http-status-codes";
 
 export const controllerLogout = (
   req: Request,
@@ -11,7 +12,7 @@ export const controllerLogout = (
     console.log("Logout");
 
     // Esempio di risposta
-    res.status(200).send({});
+    res.status(StatusCodes.OK).send({});
   } catch (error) {
     next(error);
   }

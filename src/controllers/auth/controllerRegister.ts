@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { createError } from "../../utils/createError";
 import { RequestRegisterData } from "../../models/requests/RequestRegisterData";
+import { StatusCodes } from "http-status-codes";
 
 export const controllerRegister = (
   req: Request,
@@ -13,7 +14,7 @@ export const controllerRegister = (
 
     if (!username || !password || !confirm_password) {
       throw createError(
-        400,
+        StatusCodes.BAD_REQUEST,
         "Missing username or password or confirm_password"
       );
     }
@@ -22,7 +23,7 @@ export const controllerRegister = (
     console.log("Register Data:", username, password, confirm_password);
 
     // Esempio di risposta
-    res.status(200).send({});
+    res.status(StatusCodes.OK).send({});
   } catch (error) {
     next(error);
   }
