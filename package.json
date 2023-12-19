@@ -26,6 +26,7 @@
     "http-status-codes": "^2.3.0"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.6",
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.4",
     "nodemon": "^3.0.2",
