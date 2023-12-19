@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { createError } from "../../utils/createError";
 import { RequestLoginData } from "../../models/requests/RequestLoginData";
 import { StatusCodes } from "http-status-codes";
+import axiosInstance from "../../axios/config";
 
-export const controllerLogin = (
+export const controllerLogin = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -18,8 +19,7 @@ export const controllerLogin = (
       );
     }
 
-    // Qui puoi aggiungere la logica per inviare i dati al server o per autenticare l'utente
-    console.log("Login Data:", username, password);
+    // await axiosInstance.post TODO do the request to the server here and save the token in a cookie
 
     // Esempio di risposta
     res.status(StatusCodes.OK).send({
