@@ -2,8 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { createError } from "../../utils/createError";
 import { RequestRegisterData } from "../../models/requests/RequestRegisterData";
 import { StatusCodes } from "http-status-codes";
+import { API_V1_register } from "../../axios/v1/auth/API_V1_register";
+import { AxiosResponse } from "axios";
 
-export const controllerRegister = (
+export const controllerRegister = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -19,8 +21,7 @@ export const controllerRegister = (
       );
     }
 
-    // Qui puoi aggiungere la logica per inviare i dati al server o per autenticare l'utente
-    console.log("Register Data:", username, password, confirm_password);
+    await API_V1_register(username, password, confirm_password);
 
     // Esempio di risposta
     res.status(StatusCodes.OK).send({});
