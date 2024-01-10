@@ -8,8 +8,8 @@ export async function API_V1_register(
   confirm_password: string
 ): Promise<AxiosResponse> {
   return await axiosInstanceApiV1.post(EnumServerRoutes.REGISTER, {
-    email: email,
-    password: password,
-    confirm_password: confirm_password,
+    email,
+    password,
+    confirm_password,
   });
 }
