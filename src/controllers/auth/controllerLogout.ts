@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { createError } from "../../utils/createError";
 import { StatusCodes } from "http-status-codes";
 import { API_V1_logout } from "../../axios/v1/auth/API_V1_logout";
-import { AxiosResponse } from "axios";
 import { cookieDelete } from "../../utils/cookieDelete";
 import { EnumAuthCookies } from "../../models/enums/EnumAuthCookies";
+import { createError } from "../../utils/createError";
 
 export const controllerLogout = async (
   req: Request,
@@ -12,14 +11,21 @@ export const controllerLogout = async (
   next: NextFunction
 ) => {
   try {
-    await API_V1_logout();
+    await API_V1_logout(req.axiosConfig);
 
-    cookieDelete(res, EnumAuthCookies.ACCESS_TOKEN);
-    cookieDelete(res, EnumAuthCookies.REFRESH_TOKEN);
+    if (res.statusCode === StatusCodes.BAD_REQUEST) {
+      throw createError(StatusCodes.BAD_REQUEST, "Missing access_token");
+    }
 
-    // Esempio di risposta
+    setLogoutData(res);
+
     res.status(StatusCodes.OK).send({});
   } catch (error) {
     next(error);
   }
+};
+
+export const setLogoutData = (res: Response) => {
+  cookieDelete(res, EnumAuthCookies.ACCESS_TOKEN);
+  cookieDelete(res, EnumAuthCookies.REFRESH_TOKEN);
 };
