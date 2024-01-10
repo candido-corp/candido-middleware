@@ -9,7 +9,7 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   const status = err.status || StatusCodes.INTERNAL_SERVER_ERROR;
-  const message = err.message || "Something went wrong";
+  const message = err.messages || err.message || "Something went wrong";
 
   res.status(status).json({
     error: {
