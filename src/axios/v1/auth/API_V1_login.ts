@@ -7,7 +7,7 @@ export async function API_V1_login(
   password: string
 ): Promise<AxiosResponse> {
   return await axiosInstanceApiV1.post(EnumServerRoutes.LOGIN, {
-    email: email,
-    password: password,
+    email,
+    password,
   });
 }
