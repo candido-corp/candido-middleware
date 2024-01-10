@@ -1,5 +1,6 @@
 // src/app.js
 import express, { Express } from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
@@ -10,6 +11,8 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
+
+app.use(cors());
 
 app.use(cookieParser());
 
