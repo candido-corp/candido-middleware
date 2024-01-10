@@ -1,22 +1,50 @@
-import axios, { AxiosInstance } from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
+import dotenv from "dotenv";
+import { NextFunction, Request, Response } from "express";
+import { cookieGet } from "../../utils/cookieGet";
+import { EnumAuthCookies } from "../../models/enums/EnumAuthCookies";
 import { StatusCodes } from "http-status-codes";
 import { API_V1_refresh_token } from "./auth/API_V1_refresh_token";
+import { setLoginData } from "../../controllers/auth/controllerLogin";
+import { setLogoutData } from "../../controllers/auth/controllerLogout";
+
+dotenv.config();
+
+export const handleAuthorizationAndCookies = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const axiosConfig = req.axiosConfig || {};
+  axiosConfig.headers = {
+    ...axiosConfig.headers,
+    accessToken: cookieGet(req, EnumAuthCookies.ACCESS_TOKEN),
+    refreshToken: cookieGet(req, EnumAuthCookies.REFRESH_TOKEN),
+  };
+
+  req.axiosConfig = axiosConfig;
+  next();
+};
 
 const axiosInstanceApiV1: AxiosInstance = axios.create({
   baseURL: process.env.SERVER_BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-let accessToken: string = "";
-
-export const setAccessToken = (newAccessToken: string): void => {
-  accessToken = newAccessToken;
-};
-
 axiosInstanceApiV1.interceptors.request.use(
-  (config) => {
+  (config: InternalAxiosRequestConfig<any>) => {
+    const accessToken = config.headers.accessToken;
+
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
+
     return config;
   },
   (error) => {
@@ -25,22 +53,49 @@ axiosInstanceApiV1.interceptors.request.use(
 );
 
 axiosInstanceApiV1.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse<any, any>) => {
     return response;
   },
   async (error) => {
-    if (error.response) {
-      // Lo status dell'errore
-      console.log("Status errore:", error.response.status);
+    const originalConfig = error.config;
+    const response = error.response;
 
-      // Puoi accedere ai dati dell'errore
-      console.log("Dati errore:", error.response.data);
+    console.log("response:", response);
 
-      if (error.response.status === StatusCodes.UNAUTHORIZED) {
-        // const axiosResponse: AxiosResponse = await API_V1_refresh_token();
+    if (response) {
+      if (
+        response.status === StatusCodes.UNAUTHORIZED &&
+        !originalConfig._retry &&
+        response.config.headers.refreshToken
+      ) {
+        console.log("originalConfig:", originalConfig._retry);
+        originalConfig._retry = true;
+
+        try {
+          const refreshTokenResponse: AxiosResponse =
+            await API_V1_refresh_token(response.config.headers.refreshToken);
+
+          console.log("refreshTokenResponse:", refreshTokenResponse);
+
+          return setLoginData(response, refreshTokenResponse.data);
+        } catch (_error: any) {
+          setLogoutData(response);
+          console.log("_error:", _error);
+
+          if (_error.response && _error.response.data) {
+            return Promise.reject(_error.response.data);
+          }
+
+          return Promise.reject(_error);
+        }
+      }
+
+      if (error.response.data) {
+        return Promise.reject(error.response.data);
       }
     }
 
+    console.log("error:", error);
     return Promise.reject(error);
   }
 );
