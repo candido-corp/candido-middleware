@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { createError } from "../../utils/createError";
-import { RequestRegisterData } from "../../models/requests/RequestRegisterData";
 import { StatusCodes } from "http-status-codes";
-import { API_V1_register } from "../../axios/v1/auth/API_V1_register";
-import { AxiosResponse } from "axios";
+import AuthService from "../../service/auth/AuthService";
 
 export const controllerRegister = async (
   req: Request,
@@ -11,18 +8,8 @@ export const controllerRegister = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password, confirm_password }: RequestRegisterData = req.body;
-
-    if (!email || !password || !confirm_password) {
-      throw createError(
-        StatusCodes.BAD_REQUEST,
-        "Missing email or password or confirm_password"
-      );
-    }
-
-    await API_V1_register(email, password, confirm_password);
-
-    res.status(StatusCodes.NO_CONTENT).send({});
+    await (new AuthService()).register(req, res);
+    res.status(StatusCodes.NO_CONTENT).send();
   } catch (error) {
     next(error);
   }

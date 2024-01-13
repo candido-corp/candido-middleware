@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { createError } from "../../utils/createError";
-import { API_V1_register_verify } from "../../axios/v1/auth/API_V1_register_verify";
-import { RequestRegisterVerifyData } from "../../models/requests/RequestRegisterVerifyData";
+import AuthService from "../../service/auth/AuthService";
 
 export const controllerRegisterVerify = async (
   req: Request,
@@ -10,14 +8,7 @@ export const controllerRegisterVerify = async (
   next: NextFunction
 ) => {
   try {
-    const { token }: RequestRegisterVerifyData = req.params;
-
-    if (!token) {
-      throw createError(StatusCodes.BAD_REQUEST, "Missing token");
-    }
-
-    await API_V1_register_verify(token);
-
+    await (new AuthService()).registerVerify(req, res);
     res.status(StatusCodes.NO_CONTENT).send({});
   } catch (error) {
     next(error);

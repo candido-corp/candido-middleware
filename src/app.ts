@@ -5,9 +5,9 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
 import routes from "./routes/routes";
-import { errorHandler } from "./utils/errorHandler";
-import { handleAuthorizationAndCookies } from "./axios/v1/config";
+import { errorHandler } from "./controllers/_utils/errorHandler";
 import { controllerRefreshToken } from "./controllers/auth/controllerRefreshToken";
+import { controllerEntrypoint } from "./controllers/controllerEntrypoint";
 
 dotenv.config();
 
@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.use(handleAuthorizationAndCookies);
+app.use(controllerEntrypoint);
 
 app.use("/", routes);
 
