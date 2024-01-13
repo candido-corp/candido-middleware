@@ -3,6 +3,7 @@ import { createError } from "../../utils/createError";
 import { RequestRegisterData } from "../../models/requests/RequestRegisterData";
 import { StatusCodes } from "http-status-codes";
 import { API_V1_register } from "../../axios/v1/auth/API_V1_register";
+import { AxiosResponse } from "axios";
 
 export const controllerRegister = async (
   req: Request,
@@ -10,8 +11,7 @@ export const controllerRegister = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password, confirm_password }: RequestRegisterData =
-      req.body;
+    const { email, password, confirm_password }: RequestRegisterData = req.body;
 
     if (!email || !password || !confirm_password) {
       throw createError(
@@ -22,7 +22,7 @@ export const controllerRegister = async (
 
     await API_V1_register(email, password, confirm_password);
 
-    res.status(StatusCodes.OK).send({});
+    res.status(StatusCodes.NO_CONTENT).send({});
   } catch (error) {
     next(error);
   }

@@ -4,4 +4,5 @@ export enum EnumRoutes {
   REGISTER = API_V1 + "/auth/register",
   REGISTER_VERIFY = API_V1 + "/auth/register-verify/:token",
   LOGOUT = API_V1 + "/auth/logout",
+  ACCOUNT = API_V1 + "/account",
 }

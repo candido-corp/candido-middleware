@@ -18,7 +18,7 @@ export const controllerRegisterVerify = async (
 
     await API_V1_register_verify(token);
 
-    res.status(StatusCodes.OK).send({});
+    res.status(StatusCodes.NO_CONTENT).send({});
   } catch (error) {
     next(error);
   }

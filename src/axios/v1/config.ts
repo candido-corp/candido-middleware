@@ -1,4 +1,5 @@
 import axios, {
+  AxiosHeaders,
   AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
@@ -9,8 +10,8 @@ import { cookieGet } from "../../utils/cookieGet";
 import { EnumAuthCookies } from "../../models/enums/EnumAuthCookies";
 import { StatusCodes } from "http-status-codes";
 import { API_V1_refresh_token } from "./auth/API_V1_refresh_token";
-import { setLoginData } from "../../controllers/auth/controllerLogin";
 import { setLogoutData } from "../../controllers/auth/controllerLogout";
+import { EnumServerRoutes } from "../../models/enums/EnumServerRoutes";
 
 dotenv.config();
 
@@ -35,15 +36,14 @@ const axiosInstanceApiV1: AxiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 axiosInstanceApiV1.interceptors.request.use(
   (config: InternalAxiosRequestConfig<any>) => {
-    const accessToken = config.headers.accessToken;
+    const token = config.headers.accessToken || config.headers.refreshToken;
 
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
+    config.headers.Authorization = `Bearer ${token}`;
 
     return config;
   },
@@ -54,40 +54,42 @@ axiosInstanceApiV1.interceptors.request.use(
 
 axiosInstanceApiV1.interceptors.response.use(
   (response: AxiosResponse<any, any>) => {
+    console.log("response", response.headers);
     return response;
   },
   async (error) => {
-    const originalConfig = error.config;
+    return Promise.reject(error);
     const response = error.response;
-
-    console.log("response:", response);
+    const originalConfig = error.config;
 
     if (response) {
       if (
+        (response.status === StatusCodes.UNAUTHORIZED ||
+          response.status === StatusCodes.BAD_REQUEST) &&
+        response.config.url === EnumServerRoutes.REFRESH_TOKEN
+      ) {
+        console.log("refresh token expired", response);
+        setLogoutData(response);
+      } else if (
         response.status === StatusCodes.UNAUTHORIZED &&
-        !originalConfig._retry &&
         response.config.headers.refreshToken
       ) {
-        console.log("originalConfig:", originalConfig._retry);
-        originalConfig._retry = true;
+        console.log("salvato", response.config.headers.deleteCookie);
+        const refreshTokenResponse: AxiosResponse = await API_V1_refresh_token({
+          headers: {
+            refreshToken: response.config.headers.refreshToken,
+          },
+        });
 
-        try {
-          const refreshTokenResponse: AxiosResponse =
-            await API_V1_refresh_token(response.config.headers.refreshToken);
+        originalConfig.headers = {
+          ...originalConfig.headers,
+          accessToken: refreshTokenResponse.data.access_token,
+          refreshToken: refreshTokenResponse.data.refresh_token,
+        };
 
-          console.log("refreshTokenResponse:", refreshTokenResponse);
+        console.log("jòoiljkò", originalConfig.headers);
 
-          return setLoginData(response, refreshTokenResponse.data);
-        } catch (_error: any) {
-          setLogoutData(response);
-          console.log("_error:", _error);
-
-          if (_error.response && _error.response.data) {
-            return Promise.reject(_error.response.data);
-          }
-
-          return Promise.reject(_error);
-        }
+        return axiosInstanceApiV1(originalConfig);
       }
 
       if (error.response.data) {
@@ -95,7 +97,6 @@ axiosInstanceApiV1.interceptors.response.use(
       }
     }
 
-    console.log("error:", error);
     return Promise.reject(error);
   }
 );

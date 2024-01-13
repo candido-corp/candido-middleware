@@ -22,11 +22,9 @@ export const controllerLogin = async (
 
     const axiosResponse: AxiosResponse = await API_V1_login(email, password);
 
-    console.log("axiosResponse:", axiosResponse);
-
     setLoginData(res, axiosResponse.data);
 
-    res.status(StatusCodes.OK).send({});
+    res.status(StatusCodes.NO_CONTENT).send({});
   } catch (error) {
     next(error);
   }
