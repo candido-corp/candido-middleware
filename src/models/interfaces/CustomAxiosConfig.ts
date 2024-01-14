@@ -1,7 +1,7 @@
-export class CustomAxiosConfig {
-    headers?: {
-        accessToken?: string;
-        refreshToken?: string;
-        [key: string]: string | undefined;
-    };
+export interface CustomAxiosConfig {
+  headers?: {
+    accessToken?: string;
+    refreshToken?: string;
+    [key: string]: string | undefined;
+  };
 }
