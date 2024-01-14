@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { AxiosResponse } from "axios";
-import {setLogoutData} from "../../utils/setLogoutData";
+import { setLogoutData } from "../../utils/setLogoutData";
 import AuthService from "../../service/auth/AuthService";
 
 export const controllerLogout = async (
@@ -9,7 +9,10 @@ export const controllerLogout = async (
   next: NextFunction
 ) => {
   try {
-    const axiosResponse: AxiosResponse = await (new AuthService()).logout(req, res);
+    const axiosResponse: AxiosResponse = await new AuthService().logout(
+      req,
+      res
+    );
     setLogoutData(res);
     res.status(axiosResponse.status).send({});
   } catch (error) {

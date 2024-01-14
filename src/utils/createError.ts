@@ -1,5 +1,5 @@
 import { CustomError } from "../models/utils/CustomError";
-import {EnumError} from "../models/enums/EnumError";
+import { EnumError } from "../models/enums/EnumError";
 
 export const createError = (status: number, message: string): CustomError => {
   const error = new Error(message) as CustomError;

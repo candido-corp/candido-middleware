@@ -8,7 +8,7 @@ export const controllerRegisterVerify = async (
   next: NextFunction
 ) => {
   try {
-    await (new AuthService()).registerVerify(req, res);
+    await new AuthService().registerVerify(req, res);
     res.status(StatusCodes.NO_CONTENT).send({});
   } catch (error) {
     next(error);
