@@ -12,7 +12,7 @@ import { controllerEntrypoint } from "./controllers/controllerEntrypoint";
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3001;
+const port = 3001;
 
 app.use(cors());
 
