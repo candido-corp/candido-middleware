@@ -3,6 +3,7 @@ import { CustomError } from "../../models/utils/CustomError";
 import { StatusCodes } from "http-status-codes";
 import { AxiosError } from "axios";
 import { EnumError } from "../../models/enums/EnumError";
+import {printer} from "../../utils/printer";
 
 export const errorHandler = (
   err: CustomError | AxiosError,
@@ -10,7 +11,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("ErrorHandlerController");
+  printer("App::handler::Error")
 
   const defaultStatusError = StatusCodes.INTERNAL_SERVER_ERROR;
   const defaultMessageError = "Something went wrong";

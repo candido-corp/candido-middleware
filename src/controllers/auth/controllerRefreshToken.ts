@@ -12,7 +12,7 @@ export const controllerRefreshToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  printer("RefreshTokenController");
+  printer("App:controller::RefreshToken")
 
   const status = err.response?.status;
 

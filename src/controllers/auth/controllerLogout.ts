@@ -2,12 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { AxiosResponse } from "axios";
 import { setLogoutData } from "../../utils/setLogoutData";
 import AuthService from "../../service/auth/AuthService";
+import {printer} from "../../utils/printer";
 
 export const controllerLogout = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  printer("App:controller::Logout")
   try {
     const axiosResponse: AxiosResponse = await new AuthService().logout(
       req,

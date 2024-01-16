@@ -3,12 +3,14 @@ import { StatusCodes } from "http-status-codes";
 import { AxiosResponse } from "axios";
 import AuthService from "../../service/auth/AuthService";
 import { setLoginData } from "../../utils/setLoginData";
+import {printer} from "../../utils/printer";
 
 export const controllerLogin = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  printer("App:controller::Login")
   try {
     const axiosResponse: AxiosResponse = await new AuthService().login(
       req,

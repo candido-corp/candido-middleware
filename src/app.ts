@@ -8,11 +8,14 @@ import routes from "./routes/routes";
 import { errorHandler } from "./controllers/_utils/errorHandler";
 import { controllerRefreshToken } from "./controllers/auth/controllerRefreshToken";
 import { controllerEntrypoint } from "./controllers/controllerEntrypoint";
+import {printer} from "./utils/printer";
 
 dotenv.config();
 
 const app: Express = express();
 const port = 3001;
+
+printer("App::env -> NODE_ENV [{}] | SERVER_BASE_URL [{}]", process.env.NODE_ENV, process.env.SERVER_BASE_URL);
 
 app.use(cors());
 

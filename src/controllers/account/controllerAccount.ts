@@ -9,7 +9,7 @@ export const controllerAccount = async (
   res: Response,
   next: NextFunction
 ) => {
-  printer("AccountController");
+  printer("App:controller::Account")
 
   const originalApiCall = async (
     axiosConfig?: CustomAxiosConfig
