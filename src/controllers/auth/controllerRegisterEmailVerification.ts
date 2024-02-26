@@ -3,14 +3,14 @@ import { StatusCodes } from "http-status-codes";
 import AuthService from "../../service/auth/AuthService";
 import {printer} from "../../utils/printer";
 
-export const controllerRegister = async (
+export const controllerRegisterEmailVerification = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  printer("App:controller::Register")
+  printer("App:controller::Register::EmailVerification")
   try {
-    await new AuthService().register(req, res);
+    await new AuthService().registerEmailVerification(req, res);
     res.status(StatusCodes.NO_CONTENT).send();
   } catch (error) {
     next(error);
