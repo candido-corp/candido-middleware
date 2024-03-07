@@ -21,6 +21,8 @@ export const errorHandler = (
 
   if (err instanceof AxiosError) {
     status = err.response?.status || defaultStatusError;
+    let serviceError: any = err.response?.data;
+    if(err.response?.data) message = serviceError.message || serviceError.messages || defaultMessageError;
   } else if (err.name == EnumError.KEY_CUSTOM_ERROR) {
     status = err.status || defaultStatusError;
     message = err.messages || err.message || defaultMessageError;
