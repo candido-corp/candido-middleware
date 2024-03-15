@@ -4,7 +4,7 @@ export const cookieDelete = (res: Response, cookieName: string) => {
   res.cookie(cookieName, "", {
     expires: new Date(0),
     path: "/",
-    httpOnly: true,
+    httpOnly: false,
     secure: process.env.NODE_ENV === "production",
   });
 };
