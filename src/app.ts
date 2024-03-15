@@ -17,7 +17,7 @@ const port = 3001;
 
 printer("App::env -> NODE_ENV [{}] | SERVER_BASE_URL [{}]", process.env.NODE_ENV, process.env.SERVER_BASE_URL);
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 
 app.use(cookieParser());
 
