@@ -8,4 +8,5 @@ export enum EnumServerRoutes {
   LOGOUT = API_V1 + "/auth/logout",
   REFRESH_TOKEN = API_V1 + "/auth/refresh-token",
   ACCOUNT = API_V1 + "/me",
+  ACCOUNT_DETAIL = API_V1 + "/me/details",
 }
