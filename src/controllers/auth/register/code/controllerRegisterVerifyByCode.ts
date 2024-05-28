@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import AuthService from "../../service/auth/AuthService";
-import {printer} from "../../utils/printer";
+import {printerController} from "../../../../utils/printer";
+import RegisterCodeBasedService from "../../../../service/auth/register/code/RegisterCodeBasedService";
 
 export const controllerRegisterVerifyByCode = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  printer("App:controller::RegisterVerify::Code")
+  printerController("Register verify by code")
   try {
-    await new AuthService().registerVerifyByCode(req, res);
+    await new RegisterCodeBasedService().registerResendCode(req, res);
     res.status(StatusCodes.NO_CONTENT).send({});
   } catch (error) {
     next(error);

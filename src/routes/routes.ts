@@ -3,12 +3,12 @@ import express from "express";
 import { EnumRoutes } from "../models/enums/EnumRoutes";
 
 import { controllerLogin } from "../controllers/auth/controllerLogin";
-import { controllerRegisterEmailVerification } from "../controllers/auth/controllerRegisterEmailVerification";
+import { controllerRegisterEmailVerification } from "../controllers/auth/register/email/controllerRegisterEmailVerification";
 import { controllerLogout } from "../controllers/auth/controllerLogout";
-import { controllerRegisterVerifyByEmail } from "../controllers/auth/controllerRegisterVerifyByEmail";
+import { controllerRegisterVerifyByEmail } from "../controllers/auth/register/email/controllerRegisterVerifyByEmail";
 import { controllerAccount } from "../controllers/account/controllerAccount";
-import {controllerRegisterCodeVerification} from "../controllers/auth/controllerRegisterCodeVerification";
-import {controllerRegisterVerifyByCode} from "../controllers/auth/controllerRegisterVerifyByCode";
+import {controllerRegisterCodeVerification} from "../controllers/auth/register/code/controllerRegisterCodeVerification";
+import {controllerRegisterVerifyByCode} from "../controllers/auth/register/code/controllerRegisterVerifyByCode";
 
 const router = express.Router();
 
