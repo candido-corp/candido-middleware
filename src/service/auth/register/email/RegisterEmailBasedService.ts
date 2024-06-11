@@ -35,7 +35,7 @@ export default class RegisterEmailBasedService implements RegisterEmailBasedServ
             );
         }
 
-        return await API_V1_register_email_verification(email, password, confirm_password, first_name, last_name);
+        return await API_V1_register_email_verification(req.body);
     }
 
     /**
@@ -52,7 +52,7 @@ export default class RegisterEmailBasedService implements RegisterEmailBasedServ
     public async registerVerify(req: Request, res: Response): Promise<AxiosResponse> {
         const { token }: RequestRegisterVerifyByEmailData = req.params;
         if (!token) throw createError(StatusCodes.BAD_REQUEST, "Missing token");
-        return await API_V1_register_verify_by_email(token);
+        return await API_V1_register_verify_by_email(req.body);
     }
 
 }

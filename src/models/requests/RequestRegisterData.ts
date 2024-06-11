@@ -1,7 +1,7 @@
-export interface RequestRegisterData {
-  email?: string;
-  password?: string;
-  confirm_password?: string;
-  first_name?: string;
-  last_name?: string;
+export type RequestRegisterData = {
+	email?: string;
+	password?: string;
+	confirm_password?: string;
+	first_name?: string;
+	last_name?: string;
 }

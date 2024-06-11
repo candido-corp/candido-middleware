@@ -1,22 +1,23 @@
 import { AxiosResponse } from "axios";
 import { EnumServerRoutes } from "../../../models/enums/EnumServerRoutes";
-import axiosInstanceApiV1 from "../config";
+import axiosInstance from "../../../config/ConfigAxios";
+import {RequestRegisterVerifyByCodeData} from "../../../models/requests/RequestRegisterVerifyByCodeData";
+import {RequestRegisterVerifyByEmailData} from "../../../models/requests/RequestRegisterVerifyByEmailData";
 
 export async function API_V1_register_verify_by_email(
-  token: string
+	{ token }: RequestRegisterVerifyByEmailData
 ): Promise<AxiosResponse> {
-  return await axiosInstanceApiV1.post(
-    EnumServerRoutes.REGISTER_VERIFY_BY_EMAIL + "/" + token
-  );
+	return await axiosInstance.post(
+		EnumServerRoutes.REGISTER_EMAIL_VERIFY + "/" + token
+	);
 }
 
 export async function API_V1_register_verify_by_code(
-    session_id: string,
-    temporary_code: string
+	{ session_id , temporary_code }: RequestRegisterVerifyByCodeData
 ): Promise<AxiosResponse> {
-  return await axiosInstanceApiV1.post(
-      EnumServerRoutes.REGISTER_VERIFY_BY_CODE + "/" + session_id, {
-        temporary_code
-      }
-  );
+	return await axiosInstance.post(
+		EnumServerRoutes.REGISTER_CODE_VERIFY + "/" + session_id, {
+			temporary_code
+		}
+	);
 }

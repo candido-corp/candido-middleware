@@ -1,35 +1,30 @@
 import { EnumServerRoutes } from "../../../models/enums/EnumServerRoutes";
-import axiosInstanceApiV1 from "../config";
+import axiosInstance from "../../../config/ConfigAxios";
 import { AxiosResponse } from "axios";
+import {RequestRegisterData} from "../../../models/requests/RequestRegisterData";
 
 export async function API_V1_register_email_verification(
-  email: string,
-  password: string,
-  confirm_password: string,
-  first_name: string,
-  last_name: string
-): Promise<AxiosResponse> {
-  return await axiosInstanceApiV1.post(EnumServerRoutes.REGISTER_EMAIL_VERIFICATION, {
-    email,
-    password,
-    confirm_password,
-    first_name,
-    last_name
-  });
+	{ email, password, confirm_password, first_name, last_name }: RequestRegisterData
+): Promise<AxiosResponse>
+{
+	return await axiosInstance.post(EnumServerRoutes.REGISTER_EMAIL, {
+		email,
+		password,
+		confirm_password,
+		first_name,
+		last_name
+	});
 }
 
 export async function API_V1_register_code_verification(
-    email: string,
-    password: string,
-    confirm_password: string,
-    first_name: string,
-    last_name: string
-): Promise<AxiosResponse> {
-  return await axiosInstanceApiV1.post(EnumServerRoutes.REGISTER_CODE_VERIFICATION, {
-    email,
-    password,
-    confirm_password,
-    first_name,
-    last_name
-  });
+	{ email, password, confirm_password, first_name, last_name }: RequestRegisterData
+): Promise<AxiosResponse>
+{
+	return await axiosInstance.post(EnumServerRoutes.REGISTER_CODE, {
+		email,
+		password,
+		confirm_password,
+		first_name,
+		last_name
+	});
 }

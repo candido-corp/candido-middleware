@@ -1,22 +1,23 @@
 import { NextFunction, Request, Response } from "express";
 import { cookieGet } from "../utils/cookieGet";
 import { EnumAuthCookies } from "../models/enums/EnumAuthCookies";
-import {printer} from "../utils/printer";
+import {customPrinter, printerController} from "../utils/customPrinter";
 
 export const controllerEntrypoint = (
-  req: Request,
-  res: Response,
-  next: NextFunction
+	req: Request,
+	res: Response,
+	next: NextFunction
 ) => {
-  printer("App:controller::EntryPoint")
-  const axiosConfig = req.axiosConfig || {};
+	printerController("EntryPoint")
 
-  axiosConfig.headers = {
-    ...axiosConfig.headers,
-    accessToken: cookieGet(req, EnumAuthCookies.ACCESS_TOKEN),
-    refreshToken: cookieGet(req, EnumAuthCookies.REFRESH_TOKEN),
-  };
+	const axiosConfig = req.axiosConfig || {};
 
-  req.axiosConfig = axiosConfig;
-  next();
+	axiosConfig.headers = {
+		...axiosConfig.headers,
+		accessToken: cookieGet(req, EnumAuthCookies.ACCESS_TOKEN),
+		refreshToken: cookieGet(req, EnumAuthCookies.REFRESH_TOKEN),
+	};
+
+	req.axiosConfig = axiosConfig;
+	next();
 };

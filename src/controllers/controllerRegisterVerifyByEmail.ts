@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import {printerController} from "../../../../utils/printer";
-import RegisterEmailBasedService from "../../../../service/auth/register/email/RegisterEmailBasedService";
+import {printerController} from "../utils/customPrinter";
+import RegisterEmailBasedService from "../service/auth/register/email/RegisterEmailBasedService";
 
 export const controllerRegisterVerifyByEmail = async (
   req: Request,

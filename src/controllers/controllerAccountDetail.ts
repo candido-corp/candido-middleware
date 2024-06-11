@@ -1,20 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 import { AxiosResponse } from "axios";
-import { API_V1_account } from "../../axios/v1/account/API_V1_account";
-import { CustomAxiosConfig } from "../../models/interfaces/CustomAxiosConfig";
-import { printer } from "../../utils/printer";
+import { API_V1_account } from "../axios/v1/account/API_V1_account";
+import { CustomAxiosConfig } from "../models/interfaces/CustomAxiosConfig";
+import { customPrinter } from "../utils/customPrinter";
+import {API_V1_account_detail} from "../axios/v1/account/API_V1_account_detail";
 
 export const controllerAccount = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  printer("App:controller::Account")
+  customPrinter("App:controller::AccountDetail")
 
   const originalApiCall = async (
     axiosConfig?: CustomAxiosConfig
   ): Promise<AxiosResponse> => {
-    return await API_V1_account(axiosConfig);
+    return await API_V1_account_detail(axiosConfig);
   };
 
   try {

@@ -1,17 +1,18 @@
 import { Response } from "express";
+import {ConfigApp, isProduction} from "../config/ConfigApp";
 
 export const cookieSet = (
-  res: Response,
-  name: string,
-  value: string,
-  maxAgeMillis?: number
+	res: Response,
+	name: string,
+	value: string,
+	maxAgeMillis?: number
 ) => {
-  const cookieOptions = {
-    httpOnly: false,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict" as const,
-    maxAge: maxAgeMillis || 3600000, // default 1 hour
-  };
-
-  res.cookie(name, value, cookieOptions);
+	let defaultMaxAge = ConfigApp.cookie.defaultMaxAge;
+	const cookieOptions = {
+		httpOnly: false,
+		secure: isProduction,
+		sameSite: "strict" as const,
+		maxAge: maxAgeMillis || defaultMaxAge
+	};
+	res.cookie(name, value, cookieOptions);
 };

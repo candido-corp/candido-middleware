@@ -30,7 +30,7 @@ export default class AuthService implements AuthServiceInterface {
       );
     }
 
-    return await API_V1_register_email_verification(email, password, confirm_password, first_name, last_name);
+    return await API_V1_register_email_verification(req.body);
   }
 
   public async registerCodeVerification(req: Request, res: Response): Promise<AxiosResponse> {
@@ -43,7 +43,7 @@ export default class AuthService implements AuthServiceInterface {
       );
     }
 
-    return await API_V1_register_code_verification(email, password, confirm_password, first_name, last_name);
+    return await API_V1_register_code_verification(req.body);
   }
 
   public async registerVerifyByEmail(
@@ -56,7 +56,7 @@ export default class AuthService implements AuthServiceInterface {
       throw createError(StatusCodes.BAD_REQUEST, "Missing token");
     }
 
-    return await API_V1_register_verify_by_email(token);
+    return await API_V1_register_verify_by_email(req.body);
   }
 
   public async registerVerifyByCode(
@@ -69,7 +69,7 @@ export default class AuthService implements AuthServiceInterface {
       throw createError(StatusCodes.BAD_REQUEST, "Missing session_id or temporary_code");
     }
 
-    return await API_V1_register_verify_by_code(session_id, temporary_code);
+    return await API_V1_register_verify_by_code(req.body);
   }
 
   public async login(req: Request, res: Response): Promise<AxiosResponse> {
