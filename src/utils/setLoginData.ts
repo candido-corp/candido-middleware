@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
-import { ResponseLoginData } from "../models/responses/ResponseLoginData";
-import { cookieSet } from "./cookieSet";
-import { EnumAuthCookies } from "../models/enums/EnumAuthCookies";
+import {Request, Response} from "express";
+import {ResponseLoginData} from "../data/responses/ResponseLoginData";
+import {cookieSet} from "./cookieSet";
+import {EnumAuthCookies} from "../data/enums/EnumAuthCookies";
+import printer from "./customPrinter";
 
 export function setLoginData(
 	req: Request,
@@ -29,4 +30,6 @@ export function setLoginData(
 		loginData.refresh_token,
 		loginData.refresh_expires_in
 	);
+
+	printer.info("Login data set");
 }

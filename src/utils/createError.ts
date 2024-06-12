@@ -1,9 +1,36 @@
-import { CustomError } from "../models/utils/CustomError";
-import { EnumError } from "../models/enums/EnumError";
+import {CustomError, CustomErrorResponse} from "../data/utils/CustomErrorResponse";
+import {EnumErrorType} from "../data/enums/EnumErrorType";
 
-export const createError = (status: number, message: string): CustomError => {
-	const error = new Error(message) as CustomError;
+interface ErrorConfig {
+	type: string;
+	status?: number;
+	message?: string;
+	timestamp?: string;
+	errors?: CustomError[];
+}
+
+export function createError(errorConfig: ErrorConfig): CustomErrorResponse {
+	const {
+		type = EnumErrorType.ERROR_APP,
+		status = 500,
+		timestamp = new Date().toISOString(),
+		errors = [{code: 'UNKNOWN_ERROR'}]
+	} = errorConfig;
+
+	const error = new Error(type) as CustomErrorResponse;
 	error.status = status;
-	error.name = EnumError.KEY_CUSTOM_ERROR;
+	error.timestamp = timestamp;
+	error.errors = errors;
 	return error;
-};
+}
+
+export function isSpringBootError(error: any): error is CustomErrorResponse {
+	return (
+		error &&
+		typeof error === 'object' &&
+		'status' in error &&
+		'timestamp' in error &&
+		'errors' in error &&
+		Array.isArray(error.errors)
+	);
+}

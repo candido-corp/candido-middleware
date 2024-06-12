@@ -1,17 +1,20 @@
-import {EnumAppEnv} from "../models/enums/EnumAppEnv";
+import {EnumAppEnv} from "../data/enums/EnumAppEnv";
 
 export const ConfigApp = {
 	environment: process.env.NODE_ENV as EnumAppEnv,
-	serverBaseUrl: process.env.SERVER_BASE_URL || '',
+	port: process.env.PORT || 3001,
+	springBootServerBaseUrl: process.env.SPRING_BOOT_SERVER_BASE_URL || '',
 	cookie: {
-		defaultMaxAge: 3600000
+		defaultMaxAgeMs: 3600000
 	},
 	printerVisibility: {
 		_all: true,
+		_callerDetails: false,
 		controller: true,
 		axios: true,
 		info: true,
-		env: true
+		env: true,
+		error: true
 	}
 };
 

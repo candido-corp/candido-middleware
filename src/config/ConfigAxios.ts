@@ -1,16 +1,20 @@
-import axios, {
-	AxiosInstance,
-	AxiosResponse,
-	InternalAxiosRequestConfig,
-} from "axios";
+import axios, {AxiosInstance, AxiosResponse, InternalAxiosRequestConfig,} from "axios";
 import dotenv from "dotenv";
 import printer from "../utils/customPrinter";
-import { ConfigApp } from "./ConfigApp";
+import {ConfigApp} from "./ConfigApp";
 
 dotenv.config();
 
+export interface CustomAxiosConfig {
+	headers?: {
+		accessToken?: string;
+		refreshToken?: string;
+		[key: string]: string | undefined;
+	};
+}
+
 const axiosInstance: AxiosInstance = axios.create({
-	baseURL: ConfigApp.serverBaseUrl,
+	baseURL: ConfigApp.springBootServerBaseUrl,
 	headers: {
 		"Content-Type": "application/json",
 	},

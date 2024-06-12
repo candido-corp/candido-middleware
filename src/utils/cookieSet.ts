@@ -1,4 +1,4 @@
-import { Response } from "express";
+import {Response} from "express";
 import {ConfigApp, isProduction} from "../config/ConfigApp";
 
 export const cookieSet = (
@@ -7,7 +7,7 @@ export const cookieSet = (
 	value: string,
 	maxAgeMillis?: number
 ) => {
-	let defaultMaxAge = ConfigApp.cookie.defaultMaxAge;
+	let defaultMaxAge = ConfigApp.cookie.defaultMaxAgeMs;
 	const cookieOptions = {
 		httpOnly: false,
 		secure: isProduction,

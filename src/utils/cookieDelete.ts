@@ -1,4 +1,4 @@
-import { Response } from "express";
+import {Response} from "express";
 import {isProduction} from "../config/ConfigApp";
 
 export const cookieDelete = (res: Response, cookieName: string) => {
