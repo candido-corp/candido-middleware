@@ -1,33 +1,50 @@
-import express from "express";
+import express, {NextFunction, Router} from "express";
 
-import {controllerLoginV1} from "./controllers/v1/controllerLoginV1";
-import {controllerRegisterEmailV1} from "./controllers/v1/controllerRegisterEmailV1";
-import {controllerLogoutV1} from "./controllers/v1/controllerLogoutV1";
-import {controllerRegisterEmailVerifyV1} from "./controllers/v1/controllerRegisterEmailVerifyV1";
-import {controllerAccountV1} from "./controllers/v1/controllerAccountV1";
-import {controllerRegisterCodeV1} from "./controllers/v1/controllerRegisterCodeV1";
-import {controllerRegisterCodeVerifyV1} from "./controllers/v1/controllerRegisterCodeVerifyV1";
-import {controllerRegisterCodeResendV1} from "./controllers/v1/controllerRegisterCodeResendV1";
-import {controllerAccountDetailV1} from "./controllers/v1/controllerAccountDetailV1";
-import {controllerResetPasswordSendV1} from "./controllers/v1/controllerResetPasswordSendV1";
+import {EnumController} from "./controllers/v1/_controller";
+import {Controller} from "./controllers/v1/Controller";
 
 const router = express.Router();
+type HttpMethod = keyof Router;
 
-router.post("/api/v1/auth/login", controllerLoginV1);
-router.post("/api/v1/auth/logout", controllerLogoutV1);
+interface RouteConfig {
+	access: ControllerType;
+	method: HttpMethod;
+	path: string;
+	controller: EnumController;
+}
 
-router.post("/api/v1/auth/register/email", controllerRegisterEmailV1);
-router.post("/api/v1/auth/register/email/verify", controllerRegisterEmailVerifyV1);
+export enum ControllerType {
+	PROTECTED, PUBLIC
+}
 
-router.post("/api/v1/auth/register/code", controllerRegisterCodeV1);
-router.post("/api/v1/auth/register/code/resend", controllerRegisterCodeResendV1);
-router.post("/api/v1/auth/register/code/verify", controllerRegisterCodeVerifyV1);
+export function isControllerPublic(controllerType: ControllerType): boolean {
+	return controllerType === ControllerType.PUBLIC;
+}
 
-router.post("/api/v1/auth/reset-password/send", controllerResetPasswordSendV1);
-router.post("/api/v1/auth/reset-password/change-password", () => {});
-router.post("/api/v1/auth/reset-password/check-validity", () => {});
+const protectedRoutes: RouteConfig[] = [
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/login', controller: EnumController.controllerLogin },
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/logout', controller: EnumController.controllerLogout },
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/register/email', controller: EnumController.controllerRegisterEmail },
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/register/email/verify', controller: EnumController.controllerRegisterEmailVerify },
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/register/code', controller: EnumController.controllerRegisterCode },
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/register/code/resend', controller: EnumController.controllerRegisterCodeResend },
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/register/code/verify', controller: EnumController.controllerRegisterCodeVerify },
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/reset-password/send', controller: EnumController.controllerResetPasswordSend },
+	{ access: ControllerType.PUBLIC, method: 'post', path: '/api/v1/auth/reset-password/change-password', controller: EnumController.controllerResetPasswordChangePassword },
+	{ access: ControllerType.PUBLIC, method: 'get', path: '/api/v1/auth/reset-password/check-validity', controller: EnumController.controllerResetPasswordCheckValidity },
 
-router.get("/api/v1/me", controllerAccountV1);
-router.get("/api/v1/me/details", controllerAccountDetailV1);
+	{ access: ControllerType.PROTECTED, method: 'get', path: '/api/v1/me', controller: EnumController.controllerAccount },
+	{ access: ControllerType.PROTECTED, method: 'get', path: '/api/v1/me/details', controller: EnumController.controllerAccountDetail },
+	{ access: ControllerType.PROTECTED, method: 'put', path: '/api/v1/me/password', controller: EnumController.controllerAccountPassword }
+];
+
+protectedRoutes.forEach(route => {
+	if (route.method in router) {
+		(router[route.method] as Function).call(router, route.path,
+			(req: any, res: any, next: NextFunction) =>
+			Controller(req, res, next, route.controller, route.access)
+		);
+	}
+});
 
 export default router;

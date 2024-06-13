@@ -8,4 +8,5 @@ export interface CustomErrorResponse extends Error {
 	status: number;
 	timestamp: string;
 	errors: CustomError[];
+	originalApiCall?: Function;
 }

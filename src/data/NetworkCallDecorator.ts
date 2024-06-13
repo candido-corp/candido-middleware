@@ -2,6 +2,7 @@ import {AxiosRequestConfig, AxiosResponse, isAxiosError} from 'axios';
 import axiosInstance from '../config/ConfigAxios';
 import {createError, isSpringBootError} from "../utils/createError";
 import {EnumErrorType} from "./enums/EnumErrorType";
+import printer from "../utils/customPrinter";
 
 type Method = 'get' | 'post' | 'put' | 'delete';
 
@@ -23,6 +24,9 @@ function createDecorator({url, method, headers}: DecoratorConfig) {
 
 		descriptor.value = async function (options: RequestOptions = {}): Promise<any> {
 			const {data, params, axiosConfig = {}} = options;
+
+			printer.info('CALL -> Data: {} | Params: {} | AxiosConfig: {}', data, params, axiosConfig);
+
 			let customHeader = {
 				'Content-Type': 'application/json',
 				...headers,
@@ -43,12 +47,14 @@ function createDecorator({url, method, headers}: DecoratorConfig) {
 
 			try {
 				response = await client(config);
-			} catch (error: unknown) {
+			} catch (error: any) {
 				if (isAxiosError(error) && isSpringBootError(error.response?.data)) {
+					printer.error(JSON.stringify(error.response?.data));
 					throw createError({type: EnumErrorType.ERROR_SPRING_BOOT_API, ...error.response?.data});
 				}
 
-				throw createError({type: EnumErrorType.ERROR_APP});
+				printer.error(error.response?.data || "No data in error response");
+				throw createError({type: EnumErrorType.ERROR_APP, status: error.response.status});
 			}
 
 			return response;

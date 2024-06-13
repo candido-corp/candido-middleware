@@ -9,7 +9,7 @@ export const ConfigApp = {
 	},
 	printerVisibility: {
 		_all: true,
-		_callerDetails: false,
+		_callerDetails: true,
 		controller: true,
 		axios: true,
 		info: true,

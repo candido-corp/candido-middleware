@@ -1,4 +1,4 @@
-import {GET, POST} from './NetworkCallDecorator';
+import {GET, POST, PUT} from './NetworkCallDecorator';
 import {EnumServerRoutes} from "./enums/EnumServerRoutes";
 import {ResponseLoginData} from "./responses/ResponseLoginData";
 import {RequestLogin} from "./requests/RequestLogin";
@@ -9,6 +9,9 @@ import {RequestRegisterCodeResend} from "./requests/RequestRegisterCodeResend";
 import {RequestRegisterCodeVerify} from "./requests/RequestRegisterCodeVerify";
 import {ResponseRegisterCode} from "./responses/ResponseRegisterCode";
 import {RequestResetPasswordSend} from "./requests/RequestResetPasswordSend";
+import {RequestResetPasswordChangePassword} from "./requests/RequestResetPasswordChangePassword";
+import {RequestResetPasswordCheckValidity} from "./requests/RequestResetPasswordCheckValidity";
+import {RequestAccountChangePassword} from "./requests/RequestAccountChangePassword";
 
 class NetworkClient {
 
@@ -23,7 +26,7 @@ class NetworkClient {
 	}
 
 	@POST(EnumServerRoutes.REFRESH_TOKEN)
-	async refreshToken(): Promise<AxiosResponse<ResponseLoginData>> {
+	async refreshToken(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse<ResponseLoginData>> {
 		return {} as AxiosResponse<ResponseLoginData>;
 	}
 
@@ -57,9 +60,14 @@ class NetworkClient {
 		return {} as AxiosResponse;
 	}
 
-	@POST(EnumServerRoutes.RESET_PASSWORD_CHANGE_PASSWORD)
-	async resetPasswordChangePassword(options: { data: RequestResetPasswordSend }): Promise<AxiosResponse> {
+	@GET(EnumServerRoutes.RESET_PASSWORD_CHECK_VALIDITY)
+	async resetPasswordCheckValidity(options: { params: RequestResetPasswordCheckValidity }): Promise<AxiosResponse> {
 		return {} as AxiosResponse;
+	}
+
+	@POST(EnumServerRoutes.RESET_PASSWORD_CHANGE_PASSWORD)
+	async resetPasswordChangePassword(options: { data: RequestResetPasswordChangePassword }): Promise<AxiosResponse<ResponseLoginData>> {
+		return {} as AxiosResponse<ResponseLoginData>;
 	}
 
 	@GET(EnumServerRoutes.ACCOUNT)
@@ -69,6 +77,16 @@ class NetworkClient {
 
 	@GET(EnumServerRoutes.ACCOUNT_DETAILS)
 	async getAccountDetails(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
+		return {} as AxiosResponse;
+	}
+
+	@PUT(EnumServerRoutes.ACCOUNT_PASSWORD)
+	async changeAccountPassword(options: { axiosConfig?: AxiosRequestConfig, data: RequestAccountChangePassword }): Promise<AxiosResponse> {
+		return {} as AxiosResponse;
+	}
+
+	@GET(EnumServerRoutes.GENDERS)
+	async getGenders(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
 		return {} as AxiosResponse;
 	}
 

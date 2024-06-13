@@ -6,14 +6,15 @@ import {setLoginData} from "../../utils/setLoginData";
 import {setLogoutData} from "../../utils/setLogoutData";
 import NetworkClient from "../../data/NetworkClient";
 import {ResponseLoginData} from "../../data/responses/ResponseLoginData";
+import {CustomErrorResponse} from "../../data/utils/CustomErrorResponse";
 
 export const controllerRefreshToken = async (
-	err: any,
+	err: CustomErrorResponse,
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const status = err.response?.status;
+	const status = err.status;
 
 	printer.controller(
 		controllerRefreshToken.name + " called with body: {} | url: {} | status: {}",
@@ -26,14 +27,21 @@ export const controllerRefreshToken = async (
 		printer.controller("controllerRefreshToken retry to call -> {}", req.url);
 
 		try {
-			const axiosResponse: AxiosResponse<ResponseLoginData> = await NetworkClient.refreshToken();
+			const axiosResponse: AxiosResponse<ResponseLoginData> = await NetworkClient.refreshToken({ axiosConfig: req.axiosConfig });
 			setLoginData(req, res, axiosResponse.data);
+
+			if(err.originalApiCall === undefined) {
+				res.status(StatusCodes.NO_CONTENT).send();
+				return;
+			}
+
 			const retryAxiosResponse: AxiosResponse = await err.originalApiCall(req.axiosConfig);
 			res.status(retryAxiosResponse.status).send(retryAxiosResponse.data);
 			return;
 		} catch (error) {
 			setLogoutData(res);
-			next(err);
+			next(error);
+			return;
 		}
 	}
 

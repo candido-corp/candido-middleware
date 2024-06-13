@@ -18,4 +18,7 @@ export enum EnumServerRoutes {
 
 	ACCOUNT = API_V1 + "/me",
 	ACCOUNT_DETAILS = API_V1 + "/me/details",
+	ACCOUNT_PASSWORD = API_V1 + "/me/password",
+
+	GENDERS = API_V1 + "/genders",
 }

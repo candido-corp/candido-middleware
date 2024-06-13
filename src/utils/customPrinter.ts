@@ -25,8 +25,16 @@ export function customPrinter(type: PrinterType, message: string, ...params: any
 
 	let result = message;
 	for (let param of params) {
-		if (param instanceof Object) {
-			param = JSON.stringify(param)
+		if (param === null) {
+			param = 'null';
+		} else if (param === undefined) {
+			param = 'undefined';
+		} else if (param instanceof Object) {
+			if (Object.keys(param).length === 0) {
+				param = 'null';
+			} else {
+				param = JSON.stringify(param);
+			}
 		}
 		result = result.replace(/{}/, String(param));
 	}

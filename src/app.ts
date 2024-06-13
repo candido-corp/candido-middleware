@@ -6,8 +6,8 @@ import cookieParser from "cookie-parser";
 
 import routes from "./routes";
 import {errorHandler} from "./controllers/_utils/errorHandler";
-import {controllerRefreshToken} from "./controllers/v1/controllerRefreshToken";
-import {controllerEntrypoint} from "./controllers/v1/controllerEntrypoint";
+import {controllerRefreshToken} from "./controllers/_utils/controllerRefreshToken";
+import {controllerEntrypoint} from "./controllers/_utils/controllerEntrypoint";
 import printer from "./utils/customPrinter";
 import {ConfigApp} from "./config/ConfigApp";
 

@@ -14,13 +14,13 @@ export function createError(errorConfig: ErrorConfig): CustomErrorResponse {
 		type = EnumErrorType.ERROR_APP,
 		status = 500,
 		timestamp = new Date().toISOString(),
-		errors = [{code: 'UNKNOWN_ERROR'}]
+		errors
 	} = errorConfig;
 
 	const error = new Error(type) as CustomErrorResponse;
 	error.status = status;
 	error.timestamp = timestamp;
-	error.errors = errors;
+	if(errors) error.errors = errors;
 	return error;
 }
 
