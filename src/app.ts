@@ -1,5 +1,5 @@
 // src/app.js
-import express, {Express} from "express";
+import express, {Express, NextFunction} from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -10,20 +10,35 @@ import {controllerRefreshToken} from "./controllers/_utils/controllerRefreshToke
 import {controllerEntrypoint} from "./controllers/_utils/controllerEntrypoint";
 import printer from "./utils/customPrinter";
 import {ConfigApp} from "./config/ConfigApp";
+import {RouteConfigInterface} from "./data/utils/RouteConfigInterface";
+import {Controller} from "./controllers/v1/Controller";
 
 dotenv.config();
 
 const app: Express = express();
 const port = ConfigApp.port;
+const router = express.Router();
 
 printer.env("Data -> {}", ConfigApp);
+
+function mapRoutes(routes: RouteConfigInterface[], router: express.Router) {
+	routes.forEach(route => {
+		if (route.method in router) {
+			(router[route.method] as Function).call(router, route.path,
+				(req: any, res: any, next: NextFunction) =>
+					Controller(req, res, next, route.controller, route.access)
+			);
+		}
+	});
+}
+mapRoutes(routes, router);
 
 app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
 app.use(cookieParser());
 app.use(express.json());
 
 app.use(controllerEntrypoint);
-app.use("/", routes);
+app.use("/", router);
 app.use(controllerRefreshToken);
 app.use(errorHandler);
 
