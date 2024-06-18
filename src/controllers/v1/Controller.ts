@@ -4,17 +4,17 @@ import {CustomAxiosConfig} from "../../config/ConfigAxios";
 import {AxiosResponse} from "axios";
 import {StatusCodes} from "http-status-codes";
 import NetworkClient from "../../data/NetworkClient";
-import {EnumController} from "./_controller";
-import {controllerMap} from "./controllerDefinition";
-import {ControllerType, isControllerPublic} from "../../routes";
+import {controllerMap} from "./ControllerDefinition";
+import {EnumControllerName} from "../../data/enums/EnumControllerName";
+import {EnumControllerType, isControllerPublic} from "../../data/enums/EnumControllerType";
 
 
 export const Controller = async (
 	req: Request,
 	res: Response,
 	next: NextFunction,
-	controllerName: EnumController,
-	controllerType: ControllerType
+	controllerName: EnumControllerName,
+	controllerType: EnumControllerType
 ) => {
 	printer.controller(controllerName + " called with body: {}", req.body);
 
