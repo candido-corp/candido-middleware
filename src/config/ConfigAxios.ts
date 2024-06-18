@@ -35,11 +35,9 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
 	(response: AxiosResponse<any, any>) => {
-		printer.axios('Response STATUS -> [{}]', response.status)
 		return response;
 	},
 	async (error) => {
-		printer.axios('Response STATUS -> [{}]', error.response.status)
 		return Promise.reject(error);
 	}
 );
