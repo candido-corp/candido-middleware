@@ -33,7 +33,7 @@ export function customPrinter(type: PrinterType, message: string, ...params: any
 			if (Object.keys(param).length === 0) {
 				param = 'null';
 			} else {
-				param = JSON.stringify(param);
+				param = JSON.stringify(param, null, 0);
 			}
 		}
 		result = result.replace(/{}/, String(param));
