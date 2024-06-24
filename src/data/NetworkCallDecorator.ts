@@ -48,7 +48,12 @@ function createDecorator({url, method, headers}: DecoratorConfig) {
 			try {
 				response = await client(config);
 			} catch (error: any) {
-				if(error.cause.code === 'ECONNREFUSED') {
+				if(
+					error != undefined &&
+					error.cause != undefined &&
+					'code' in error.cause &&
+					error.cause.code === 'ECONNREFUSED'
+				) {
 					throw createError({type: EnumErrorType.ERROR_APP, status: 500, errors: [{code: 'ECONNREFUSED', message: 'Connection refused'}]});
 				}
 
