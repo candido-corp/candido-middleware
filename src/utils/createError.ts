@@ -34,3 +34,7 @@ export function isSpringBootError(error: any): error is CustomErrorResponse {
 		Array.isArray(error.errors)
 	);
 }
+
+export function isEnumErrorType(type: string): type is EnumErrorType {
+	return Object.values(EnumErrorType).includes(type as EnumErrorType);
+}
