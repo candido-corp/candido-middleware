@@ -31,5 +31,5 @@ export function setLoginData(
 		loginData.refresh_expires_in
 	);
 
-	printer.info("Login data set");
+	printer.info("Login data set -> {}", loginData);
 }
