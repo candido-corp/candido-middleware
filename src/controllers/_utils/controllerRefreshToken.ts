@@ -35,6 +35,7 @@ export const controllerRefreshToken = async (
 				return;
 			}
 
+			// TODO: Check if this is the correct way to call the original API call - at this point the original API call is not a function
 			const retryAxiosResponse: AxiosResponse = await err.originalApiCall(req.axiosConfig);
 			res.status(retryAxiosResponse.status).send(retryAxiosResponse.data);
 			return;

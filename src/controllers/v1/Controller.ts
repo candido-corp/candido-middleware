@@ -8,7 +8,6 @@ import {controllerMap} from "./ControllerDefinition";
 import {EnumControllerName} from "../../data/enums/EnumControllerName";
 import {EnumControllerType, isControllerPublic} from "../../data/enums/EnumControllerType";
 
-
 export const Controller = async (
 	req: Request,
 	res: Response,
@@ -36,9 +35,7 @@ export const Controller = async (
 	try {
 		await controllerFunction(req, res, next, originalApiCall);
 	} catch (error: any) {
-		if (isControllerPublic(controllerType))
-			error.originalApiCall = () => originalApiCall(req.axiosConfig, controllerFunction);
-
+		error.originalApiCall = (axiosConfig: {}) => originalApiCall(axiosConfig, controllerFunction);
 		next(error);
 	}
 };
