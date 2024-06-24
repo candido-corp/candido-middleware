@@ -1,5 +1,8 @@
 import {EnumAppEnv} from "../data/enums/EnumAppEnv";
 
+/**
+ * @description Application configuration
+ */
 export const ConfigApp = {
 	environment: process.env.NODE_ENV as EnumAppEnv,
 	port: process.env.PORT || 3001,
@@ -9,7 +12,7 @@ export const ConfigApp = {
 	},
 	printerVisibility: {
 		_all: true,
-		_callerDetails: true,
+		_callerDetails: false,
 		controller: true,
 		axios: true,
 		info: true,
@@ -18,4 +21,7 @@ export const ConfigApp = {
 	}
 };
 
+/**
+ * @description Check if the current environment is production
+ */
 export const isProduction = ConfigApp.environment === EnumAppEnv.PRODUCTION;
