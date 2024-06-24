@@ -41,6 +41,9 @@ app.use(controllerEntrypoint);
 app.use("/", router);
 app.use(controllerRefreshToken);
 app.use(errorHandler);
+app.use('*', function(req, res){
+	res.status(404).send();
+});
 
 app.listen(port, () => {
 	printer.info(`Server is running at http://localhost:${port}`);
