@@ -6,24 +6,13 @@ import {setLogoutData} from "../../utils/setLogoutData";
 import {EnumControllerName} from "../../data/enums/EnumControllerName";
 
 /**
- * Create a default protected controller
+ * Create a default controller
  * @param func - The function to call
  */
-function createDefaultProtectedController(func: Function) {
+function createDefaultController(func: Function) {
 	return async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
 		let response = await originalApiCall(req.axiosConfig, func);
 		res.status(response.status).send(response.data);
-	};
-}
-
-/**
- * Create a default public controller
- * @param func - The function to call
- */
-function createDefaultPublicController(func: Function) {
-	return async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
-		await originalApiCall(req.axiosConfig, func);
-		res.status(StatusCodes.NO_CONTENT).send();
 	};
 }
 
@@ -43,27 +32,28 @@ export const controllerMap = {
 		res.status(axiosResponse.status).send(axiosResponse.data);
 	},
 
-	[EnumControllerName.controllerRegisterCode]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
-		const axiosResponse = await originalApiCall(req.axiosConfig, NetworkClient.registerCode);
-		res.status(StatusCodes.OK).send({t: axiosResponse.data.t});
-	},
-
 	[EnumControllerName.controllerResetPasswordChangePassword]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
 		const axiosResponse = await originalApiCall(req.axiosConfig, NetworkClient.resetPasswordChangePassword);
 		setLoginData(req, res, axiosResponse.data);
 		res.status(axiosResponse.status).send(axiosResponse.data);
 	},
 
-	[EnumControllerName.controllerRegisterEmail]: createDefaultPublicController(NetworkClient.registerEmail),
-	[EnumControllerName.controllerRegisterEmailVerify]: createDefaultPublicController(NetworkClient.registerEmailVerify),
-	[EnumControllerName.controllerRegisterCodeResend]: createDefaultProtectedController(NetworkClient.registerCodeResend),
-	[EnumControllerName.controllerRegisterCodeVerify]: createDefaultProtectedController(NetworkClient.registerCodeVerify),
-	[EnumControllerName.controllerResetPasswordSend]: createDefaultPublicController(NetworkClient.resetPasswordSend),
-	[EnumControllerName.controllerResetPasswordCheckValidity]: createDefaultPublicController(NetworkClient.resetPasswordCheckValidity),
+	[EnumControllerName.controllerRegisterEmail]:  async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+		const axiosResponse = await originalApiCall(req.axiosConfig, NetworkClient.registerEmail);
+		setLoginData(req, res, axiosResponse.data)
+		res.status(StatusCodes.NO_CONTENT).send();
+	},
 
-	[EnumControllerName.controllerAccount]: createDefaultProtectedController(NetworkClient.getAccount),
-	[EnumControllerName.controllerAccountDetail]: createDefaultProtectedController(NetworkClient.getAccountDetails),
-	[EnumControllerName.controllerAccountPassword]: createDefaultProtectedController(NetworkClient.changeAccountPassword),
+	[EnumControllerName.controllerRegisterEmailVerify]: createDefaultController(NetworkClient.registerEmailVerify),
+	[EnumControllerName.controllerRegisterCode]: createDefaultController(NetworkClient.registerCode),
+	[EnumControllerName.controllerRegisterCodeResend]: createDefaultController(NetworkClient.registerCodeResend),
+	[EnumControllerName.controllerRegisterCodeVerify]: createDefaultController(NetworkClient.registerCodeVerify),
+	[EnumControllerName.controllerResetPasswordSend]: createDefaultController(NetworkClient.resetPasswordSend),
+	[EnumControllerName.controllerResetPasswordCheckValidity]: createDefaultController(NetworkClient.resetPasswordCheckValidity),
 
-	[EnumControllerName.controllerGender]: createDefaultProtectedController(NetworkClient.getGenders)
+	[EnumControllerName.controllerAccount]: createDefaultController(NetworkClient.getAccount),
+	[EnumControllerName.controllerAccountDetail]: createDefaultController(NetworkClient.getAccountDetails),
+	[EnumControllerName.controllerAccountPassword]: createDefaultController(NetworkClient.changeAccountPassword),
+
+	[EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders)
 };
