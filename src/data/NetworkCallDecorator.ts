@@ -6,6 +6,23 @@ import printer from "../utils/customPrinter";
 
 type Method = 'get' | 'post' | 'put' | 'delete';
 
+const commonSystemErrors = [
+	'EACCES',       // Permission denied
+	'EADDRINUSE',   // Address already in use
+	'ECONNREFUSED', // Connection refused
+	'ECONNRESET',   // Connection reset by peer
+	'EEXIST',       // File exists
+	'EISDIR',       // Is a directory
+	'EMFILE',       // Too many open files in system
+	'ENOENT',       // No such file or directory
+	'ENOTDIR',      // Not a directory
+	'ENOTEMPTY',    // Directory not empty
+	'ENOTFOUND',    // DNS lookup failed
+	'EPERM',        // Operation not permitted
+	'EPIPE',        // Broken pipe
+	'ETIMEDOUT'     // Operation timed out
+];
+
 interface DecoratorConfig {
 	url: string;
 	method: Method;
@@ -52,9 +69,13 @@ function createDecorator({url, method, headers}: DecoratorConfig) {
 					error != undefined &&
 					error.cause != undefined &&
 					'code' in error.cause &&
-					error.cause.code === 'ECONNREFUSED'
+					commonSystemErrors.includes(error.cause.code)
 				) {
-					throw createError({type: EnumErrorType.ERROR_APP, status: 500, errors: [{code: 'ECONNREFUSED', message: 'Connection refused'}]});
+					throw createError({
+						type: EnumErrorType.ERROR_APP,
+						status: 500,
+						errors: [{code: error.cause.code, message: 'Connection refused'}]
+					});
 				}
 
 				if (isAxiosError(error) && isSpringBootError(error.response?.data)) {
