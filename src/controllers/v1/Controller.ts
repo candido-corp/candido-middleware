@@ -12,7 +12,7 @@ export const Controller = async (
 	controllerName: EnumControllerName,
 	controllerType: EnumControllerType
 ) => {
-	printer.controller(controllerName + " [{}] called with body: {}", controllerType, req.body);
+	printer.controller(controllerName + " [{}] called with body: {}", EnumControllerType[controllerType], req.body);
 
 	const controllerFunction = controllerMap[controllerName];
 
