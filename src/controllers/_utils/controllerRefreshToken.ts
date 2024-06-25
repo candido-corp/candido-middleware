@@ -7,6 +7,7 @@ import {setLogoutData} from "../../utils/setLogoutData";
 import NetworkClient from "../../data/NetworkClient";
 import {ResponseLoginData} from "../../data/responses/ResponseLoginData";
 import {CustomErrorResponse} from "../../data/utils/CustomErrorResponse";
+import {callResponse, CallResponseType} from "../v1/ControllerDefinition";
 
 export const controllerRefreshToken = async (
 	err: CustomErrorResponse,
@@ -23,7 +24,7 @@ export const controllerRefreshToken = async (
 		status
 	);
 
-	if (status === StatusCodes.UNAUTHORIZED) {
+	if (status === StatusCodes.UNAUTHORIZED && req.axiosConfig.refreshToken !== undefined) {
 		printer.controller("controllerRefreshToken retry to call -> {}", req.url);
 
 		try {
@@ -35,16 +36,12 @@ export const controllerRefreshToken = async (
 				return;
 			}
 
-			// TODO: Check if this is the correct way to call the original API call - at this point the original API call is not a function
-			const retryAxiosResponse: AxiosResponse = await err.originalApiCall(req.axiosConfig);
-			res.status(retryAxiosResponse.status).send(retryAxiosResponse.data);
-			return;
+			let response: CallResponseType = await err.originalApiCall(req, res);
+			res.status(response.status).send(response.data);
 		} catch (error) {
 			setLogoutData(res);
 			next(error);
 			return;
 		}
-	}
-
-	next(err);
+	} else next(err);
 };

@@ -1,5 +1,4 @@
-import {CustomAxiosConfig} from "../../config/ConfigAxios";
-import {AxiosResponse} from "axios";
+import {CallResponseType} from "../../controllers/v1/ControllerDefinition";
 
 export interface CustomError {
 	code: string;
@@ -11,5 +10,5 @@ export interface CustomErrorResponse extends Error {
 	status: number;
 	timestamp: string;
 	errors: CustomError[];
-	originalApiCall?: (axiosConfig?: CustomAxiosConfig) => Promise<AxiosResponse>;
+	originalApiCall?: (req: any, res: any) => Promise<CallResponseType>;
 }
