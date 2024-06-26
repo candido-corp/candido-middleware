@@ -81,10 +81,15 @@ export const controllerMap = {
 		return callResponse(StatusCodes.NO_CONTENT, null);
 	},
 
+	[EnumControllerName.controllerRegisterCodeVerify]:   async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+		const response = await originalApiCall(req, NetworkClient.registerCodeVerify);
+		setLoginData(req, res, response.data)
+		return callResponse(StatusCodes.NO_CONTENT, null);
+	},
+
 	[EnumControllerName.controllerRegisterEmailVerify]: createDefaultController(NetworkClient.registerEmailVerify),
 	[EnumControllerName.controllerRegisterCode]: createDefaultController(NetworkClient.registerCode),
 	[EnumControllerName.controllerRegisterCodeResend]: createDefaultController(NetworkClient.registerCodeResend),
-	[EnumControllerName.controllerRegisterCodeVerify]: createDefaultController(NetworkClient.registerCodeVerify),
 	[EnumControllerName.controllerResetPasswordSend]: createDefaultController(NetworkClient.resetPasswordSend),
 	[EnumControllerName.controllerResetPasswordCheckValidity]: createDefaultController(NetworkClient.resetPasswordCheckValidity),
 
