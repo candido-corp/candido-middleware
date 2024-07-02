@@ -41,6 +41,20 @@ app.use(controllerEntrypoint);
 app.use("/", router);
 app.use(controllerRefreshToken);
 app.use(errorHandler);
+
+app.use('/health', async (_req, res, _next) => {
+	const healthcheck = {
+		uptime: process.uptime(),
+		message: 'OK',
+		timestamp: Date.now()
+	};
+	try {
+		res.send(healthcheck);
+	} catch (error) {
+		res.status(503).send();
+	}
+});
+
 app.use('*', function(req, res){
 	res.status(404).send();
 });
