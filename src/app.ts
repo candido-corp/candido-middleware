@@ -33,7 +33,14 @@ function mapRoutes(routes: RouteConfigInterface[], router: express.Router) {
 }
 mapRoutes(routes, router);
 
-app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
+app.use(cors({
+	credentials: true,
+	origin: [
+		'http://localhost:5173',
+		'http://localhost:3000',
+		'http://candido-client.localhost'
+	]
+}));
 app.use(cookieParser());
 app.use(express.json());
 
