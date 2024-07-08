@@ -24,7 +24,7 @@ export const controllerRefreshToken = async (
 		status
 	);
 
-	if (status === StatusCodes.UNAUTHORIZED && req.axiosConfig.refreshToken !== undefined) {
+	if (status === StatusCodes.UNAUTHORIZED && req.axiosConfig.headers.refreshToken !== undefined) {
 		printer.controller("controllerRefreshToken retry to call -> {}", req.url);
 
 		try {
