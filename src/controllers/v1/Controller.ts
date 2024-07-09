@@ -21,6 +21,15 @@ export const Controller = async (
 		return;
 	}
 
+	// If the controller is a refresh token, then we need to update the access token
+	// with the refresh token only if the access token is present
+	if(controllerName === EnumControllerName.controllerRefreshToken) {
+		if(req.axiosConfig.headers.accessToken && req.axiosConfig.headers.refreshToken) {
+			req.axiosConfig.headers.accessToken = req.axiosConfig.headers.refreshToken;
+			req.axiosConfig.headers.refreshToken = null;
+		}
+	}
+
 	try {
 		let response = await controllerFunction(req, res, next, originalApiCall);
 		res.status(response.status).send(response.data);

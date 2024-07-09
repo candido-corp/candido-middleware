@@ -1,6 +1,7 @@
 export enum EnumControllerName {
 	controllerLogin = "controllerLogin",
 	controllerLogout = "controllerLogout",
+	controllerRefreshToken = "controllerRefreshToken",
 	controllerRegisterEmail = "controllerRegisterEmail",
 	controllerRegisterEmailVerify = "controllerRegisterEmailVerify",
 	controllerRegisterCode = "controllerRegisterCode",

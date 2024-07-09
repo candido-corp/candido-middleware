@@ -69,6 +69,12 @@ export const controllerMap = {
 		return callResponse(response.status, response.data);
 	},
 
+	[EnumControllerName.controllerRefreshToken]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+		const response = await originalApiCall(req, NetworkClient.refreshToken);
+		setLoginData(req, res, response.data);
+		return callResponse(StatusCodes.NO_CONTENT, null);
+	},
+
 	[EnumControllerName.controllerResetPasswordChangePassword]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
 		const response = await originalApiCall(req, NetworkClient.resetPasswordChangePassword);
 		setLoginData(req, res, response.data);

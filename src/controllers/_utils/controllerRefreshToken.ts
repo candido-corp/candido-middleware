@@ -8,6 +8,7 @@ import NetworkClient from "../../data/NetworkClient";
 import {ResponseLoginData} from "../../data/responses/ResponseLoginData";
 import {CustomErrorResponse} from "../../data/utils/CustomErrorResponse";
 import {callResponse, CallResponseType} from "../v1/ControllerDefinition";
+import {EnumServerRoutes} from "../../data/enums/EnumServerRoutes";
 
 export const controllerRefreshToken = async (
 	err: CustomErrorResponse,
@@ -24,7 +25,11 @@ export const controllerRefreshToken = async (
 		status
 	);
 
-	if (status === StatusCodes.UNAUTHORIZED && req.axiosConfig.headers.refreshToken !== undefined) {
+	const isStatusUnauthorized = status === StatusCodes.UNAUTHORIZED;
+	const isRefreshTokenUndefined = req.axiosConfig.headers.refreshToken === undefined;
+	const isPathRefreshToken = req.url.includes(EnumServerRoutes.REFRESH_TOKEN);
+
+	if (isStatusUnauthorized && !isRefreshTokenUndefined && !isPathRefreshToken) {
 		printer.controller("controllerRefreshToken retry to call -> {}", req.url);
 
 		try {

@@ -18,6 +18,12 @@ const routes: RouteConfigInterface[] = [
 	{
 		access: EnumControllerType.PUBLIC,
 		method: 'post',
+		path: '/api/v1/auth/token/refresh',
+		controller: EnumControllerName.controllerRefreshToken
+	},
+	{
+		access: EnumControllerType.PUBLIC,
+		method: 'post',
 		path: '/api/v1/auth/register/email',
 		controller: EnumControllerName.controllerRegisterEmail
 	},
