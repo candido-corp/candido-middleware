@@ -38,7 +38,8 @@ app.use(cors({
 	origin: [
 		'http://localhost:5173',
 		'http://localhost:3000',
-		'http://candido-client.localhost'
+		'http://candido-client.localhost',
+		'http://client.candido.localhost',
 	]
 }));
 app.use(cookieParser());
