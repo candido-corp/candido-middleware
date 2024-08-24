@@ -4,6 +4,7 @@ export interface CustomError {
 	code: string;
 	data?: object;
 	message?: string;
+	fields?: string[];
 }
 
 export interface CustomErrorResponse extends Error {
