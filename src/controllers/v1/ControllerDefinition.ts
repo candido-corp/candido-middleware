@@ -4,7 +4,6 @@ import {StatusCodes} from "http-status-codes";
 import {setLoginData} from "../../utils/setLoginData";
 import {setLogoutData} from "../../utils/setLogoutData";
 import {EnumControllerName} from "../../data/enums/EnumControllerName";
-import {CustomAxiosConfig} from "../../config/ConfigAxios";
 import {AxiosResponse} from "axios";
 
 /**
@@ -17,7 +16,7 @@ export const originalApiCall = async (req: any, func?: Function): Promise<AxiosR
 	return await func?.bind(NetworkClient)({
 		...(axiosConfig && {axiosConfig: axiosConfig}),
 		...(req.body && {data: req.body}),
-		...(req.params && {params: req.params}),
+		...(req.query && {params: req.query}), // req.query is used for query params but on axios it is params
 	});
 };
 
