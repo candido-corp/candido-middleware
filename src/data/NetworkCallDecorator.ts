@@ -83,7 +83,7 @@ function createDecorator({url, method, headers}: DecoratorConfig) {
 					throw createError({type: EnumErrorType.ERROR_SPRING_BOOT_API, ...error.response?.data});
 				}
 
-				printer.error(error.response?.data || "No data in error response");
+        printer.error(typeof error.response?.data === 'object' ? JSON.stringify(error.response?.data) : error.response?.data || "No data in error response");
 				throw createError({type: EnumErrorType.ERROR_APP, status: error.response.status});
 			}
 
