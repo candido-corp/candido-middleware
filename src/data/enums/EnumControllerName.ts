@@ -13,5 +13,8 @@ export enum EnumControllerName {
 	controllerAccount = "controllerAccount",
 	controllerAccountDetail = "controllerAccountDetail",
 	controllerAccountPassword = "controllerAccountPassword",
-	controllerGender = "controllerGender"
+	controllerGender = "controllerGender",
+	controllerGeos = "controllerGeos",
+	controllerGeosChildren = "controllerGeosChildren",
+	controllerApplications = "controllerApplications",
 }

@@ -21,4 +21,9 @@ export enum EnumServerRoutes {
 	ACCOUNT_PASSWORD = API_V1 + "/me/password",
 
 	GENDERS = API_V1 + "/genders",
+
+	GEOS = API_V1 + "/geos",
+	GEOS_CHILDREN = API_V1 + "/geos/:geoId/children",
+
+	APPLICATIONS = API_V1 + "/me/applications"
 }
