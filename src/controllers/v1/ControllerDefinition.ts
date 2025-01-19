@@ -16,7 +16,8 @@ export const originalApiCall = async (req: any, func?: Function): Promise<AxiosR
 	return await func?.bind(NetworkClient)({
 		...(axiosConfig && {axiosConfig: axiosConfig}),
 		...(req.body && {data: req.body}),
-		...(req.query && {params: req.query}), // req.query is used for query params but on axios it is params
+		...(req.query && {params: req.query}),
+		...(req.params && {pathParams: {...req.params}})
 	});
 };
 

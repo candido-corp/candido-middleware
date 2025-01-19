@@ -32,7 +32,17 @@ interface DecoratorConfig {
 interface RequestOptions {
 	data?: any;
 	params?: Record<string, any>;
+	pathParams?: Record<string, any>;
 	axiosConfig?: AxiosRequestConfig;
+}
+
+function replaceUrlParams(url: string, pathParams?: Record<string, any>): string {
+	if (!pathParams) return url;
+	let result = url;
+	for (const key of Object.keys(pathParams)) {
+		result = result.replace(`:${key}`, String(pathParams[key]));
+	}
+	return result;
 }
 
 function createDecorator({url, method, headers}: DecoratorConfig) {
@@ -40,7 +50,12 @@ function createDecorator({url, method, headers}: DecoratorConfig) {
 		const originalMethod = descriptor.value;
 
 		descriptor.value = async function (options: RequestOptions = {}): Promise<any> {
-			const {data, params, axiosConfig = {}} = options;
+			const {
+				data,
+				params,
+				pathParams,
+				axiosConfig = {}
+			} = options;
 
 			printer.info('CALL -> Data: {} | Params: {} | AxiosConfig: {}', data, params, axiosConfig);
 
@@ -50,8 +65,10 @@ function createDecorator({url, method, headers}: DecoratorConfig) {
 				...axiosConfig.headers
 			};
 
+			const finalUrl = replaceUrlParams(url, pathParams);
+
 			const config: AxiosRequestConfig = {
-				url,
+				url: finalUrl,
 				method,
 				headers: customHeader,
 				data: method === 'post' || method === 'put' ? data : undefined,
