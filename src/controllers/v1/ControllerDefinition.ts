@@ -93,6 +93,11 @@ export const controllerMap = {
 		return callResponse(StatusCodes.NO_CONTENT, null);
 	},
 
+	[EnumControllerName.controllerGeosChildren]:   async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+		const response = await originalApiCall(req, NetworkClient.getCountriesChildren);
+		return callResponse(response.status, response.data);
+	},
+
 	[EnumControllerName.controllerRegisterEmailVerify]: createDefaultController(NetworkClient.registerEmailVerify),
 	[EnumControllerName.controllerRegisterCode]: createDefaultController(NetworkClient.registerCode),
 	[EnumControllerName.controllerRegisterCodeResend]: createDefaultController(NetworkClient.registerCodeResend),
@@ -103,5 +108,8 @@ export const controllerMap = {
 	[EnumControllerName.controllerAccountDetail]: createDefaultController(NetworkClient.getAccountDetails),
 	[EnumControllerName.controllerAccountPassword]: createDefaultController(NetworkClient.changeAccountPassword),
 
-	[EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders)
+	[EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders),
+	[EnumControllerName.controllerGeos]: createDefaultController(NetworkClient.getCountries),
+
+	[EnumControllerName.controllerApplications]: createDefaultController(NetworkClient.getApplications)
 };
