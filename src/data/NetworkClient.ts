@@ -4,9 +4,8 @@ import {ResponseLoginData} from "./responses/ResponseLoginData";
 import {RequestLogin} from "./requests/RequestLogin";
 import {AxiosRequestConfig, AxiosResponse} from "axios";
 import {RequestRegister} from "./requests/RequestRegister";
-import {RequestRegisterEmailVerify} from "./requests/RequestRegisterEmailVerify";
+import {RequestRegisterVerify} from "./requests/RequestRegisterVerify";
 import {RequestRegisterCodeResend} from "./requests/RequestRegisterCodeResend";
-import {RequestRegisterCodeVerify} from "./requests/RequestRegisterCodeVerify";
 import {ResponseRegisterCode} from "./responses/ResponseRegisterCode";
 import {RequestResetPasswordSend} from "./requests/RequestResetPasswordSend";
 import {RequestResetPasswordChangePassword} from "./requests/RequestResetPasswordChangePassword";
@@ -36,7 +35,7 @@ class NetworkClient {
 	}
 
 	@POST(EnumServerRoutes.REGISTER_EMAIL_VERIFY)
-	async registerEmailVerify(options: { data: RequestRegisterEmailVerify }): Promise<AxiosResponse> {
+	async registerEmailVerify(options: { data: RequestRegisterVerify }): Promise<AxiosResponse> {
 		return {} as AxiosResponse;
 	}
 
@@ -51,7 +50,7 @@ class NetworkClient {
 	}
 
 	@POST(EnumServerRoutes.REGISTER_CODE_VERIFY)
-	async registerCodeVerify(options: { data: RequestRegisterCodeVerify }): Promise<AxiosResponse> {
+	async registerCodeVerify(options: { data: RequestRegisterVerify }): Promise<AxiosResponse> {
 		return {} as AxiosResponse;
 	}
 

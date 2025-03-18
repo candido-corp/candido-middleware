@@ -30,8 +30,8 @@ const routes: RouteConfigInterface[] = [
 	{
 		access: EnumControllerType.PUBLIC,
 		method: 'post',
-		path: '/api/v1/auth/register/email/verify',
-		controller: EnumControllerName.controllerRegisterEmailVerify
+		path: '/api/v1/auth/register/verify',
+		controller: EnumControllerName.controllerRegisterVerify
 	},
 	{
 		access: EnumControllerType.PUBLIC,
@@ -44,12 +44,6 @@ const routes: RouteConfigInterface[] = [
 		method: 'post',
 		path: '/api/v1/auth/register/code/resend',
 		controller: EnumControllerName.controllerRegisterCodeResend
-	},
-	{
-		access: EnumControllerType.PUBLIC,
-		method: 'post',
-		path: '/api/v1/auth/register/code/verify',
-		controller: EnumControllerName.controllerRegisterCodeVerify
 	},
 	{
 		access: EnumControllerType.PUBLIC,

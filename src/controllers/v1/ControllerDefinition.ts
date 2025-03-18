@@ -5,6 +5,7 @@ import {setLoginData} from "../../utils/setLoginData";
 import {setLogoutData} from "../../utils/setLogoutData";
 import {EnumControllerName} from "../../data/enums/EnumControllerName";
 import {AxiosResponse} from "axios";
+import {RequestRegisterVerify, RequestRegisterVerifyType} from "../../data/requests/RequestRegisterVerify";
 
 /**
  * Original API call
@@ -80,19 +81,20 @@ export const controllerMap = {
 		return callResponse(response.status, response.data);
 	},
 
-	[EnumControllerName.controllerRegisterEmail]:  async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+	[EnumControllerName.controllerRegisterEmail]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
 		const response = await originalApiCall(req, NetworkClient.registerEmail);
 		setLoginData(req, res, response.data)
 		return callResponse(StatusCodes.NO_CONTENT, null);
 	},
 
-	[EnumControllerName.controllerRegisterCodeVerify]:   async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
-		const response = await originalApiCall(req, NetworkClient.registerCodeVerify);
+	[EnumControllerName.controllerRegisterVerify]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+		const request: RequestRegisterVerify = req.body;
+		const method: Function = request.a == RequestRegisterVerifyType.EMAIL ? NetworkClient.registerEmailVerify : NetworkClient.registerCodeVerify;
+		const response = await originalApiCall(req, method);
 		setLoginData(req, res, response.data)
 		return callResponse(StatusCodes.NO_CONTENT, null);
 	},
 
-	[EnumControllerName.controllerRegisterEmailVerify]: createDefaultController(NetworkClient.registerEmailVerify),
 	[EnumControllerName.controllerRegisterCode]: createDefaultController(NetworkClient.registerCode),
 	[EnumControllerName.controllerRegisterCodeResend]: createDefaultController(NetworkClient.registerCodeResend),
 	[EnumControllerName.controllerResetPasswordSend]: createDefaultController(NetworkClient.resetPasswordSend),

@@ -26,7 +26,7 @@ export interface ConfigAppType {
 export const ConfigApp: ConfigAppType = {
 	environment: process.env.NODE_ENV as EnumAppEnv,
 	port: parseInt(process.env.PORT || '3001', 10),
-	springBootServerBaseUrl: process.env.SPRING_BOOT_SERVER_BASE_URL || '',
+	springBootServerBaseUrl: process.env.SPRING_BOOT_SERVER_BASE_URL || 'http://localhost:8080',
 	cookie: {
 		defaultMaxAgeMs: parseInt(process.env.COOKIE_DEFAULT_MAX_AGE || '3600000', 10),
 		defaultHttpOnly: process.env.COOKIE_DEFAULT_HTTP_ONLY === 'true',
