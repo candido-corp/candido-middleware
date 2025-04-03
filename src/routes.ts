@@ -57,7 +57,12 @@ const routes: RouteConfigInterface[] = [
 		path: '/api/v1/auth/reset-password/check-validity',
 		controller: EnumControllerName.controllerResetPasswordCheckValidity
 	},
-
+	{
+		access: EnumControllerType.PROTECTED,
+		method: 'get',
+		path: '/api/v1/genders',
+		controller: EnumControllerName.controllerGender
+	},
 	{
 		access: EnumControllerType.PROTECTED,
 		method: 'get',
@@ -72,9 +77,27 @@ const routes: RouteConfigInterface[] = [
 	},
 	{
 		access: EnumControllerType.PROTECTED,
+		method: 'get',
+		path: '/api/v1/geos',
+		controller: EnumControllerName.controllerGeos
+	},
+	{
+		access: EnumControllerType.PROTECTED,
+		method: 'get',
+		path: '/api/v1/geos/:geoId/children',
+		controller: EnumControllerName.controllerGeosChildren
+	},
+	{
+		access: EnumControllerType.PROTECTED,
 		method: 'put',
 		path: '/api/v1/me/password',
 		controller: EnumControllerName.controllerAccountPassword
+	},
+	{
+		access: EnumControllerType.PROTECTED,
+		method: 'get',
+		path: '/api/v1/me/applications',
+		controller: EnumControllerName.controllerApplications
 	}
 ];
 

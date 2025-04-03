@@ -18,7 +18,8 @@ export const originalApiCall = async (req: any, func?: Function): Promise<AxiosR
 	return await func?.bind(NetworkClient)({
 		...(axiosConfig && {axiosConfig: axiosConfig}),
 		...(req.body && {data: req.body}),
-		...(req.query && {params: req.query}), // req.query is used for query params but on axios it is params
+		...(req.query && {params: req.query}),
+		...(req.params && {pathParams: {...req.params}})
 	});
 };
 
@@ -104,6 +105,11 @@ export const controllerMap = {
 		return callResponse(StatusCodes.NO_CONTENT, null);
 	},
 
+	[EnumControllerName.controllerGeosChildren]:   async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+		const response = await originalApiCall(req, NetworkClient.getCountriesChildren);
+		return callResponse(response.status, response.data);
+	},
+
 	[EnumControllerName.controllerRegisterCodeResend]: createDefaultController(NetworkClient.registerCodeResend),
 	[EnumControllerName.controllerResetPasswordSend]: createDefaultController(NetworkClient.resetPasswordSend),
 	[EnumControllerName.controllerResetPasswordCheckValidity]: createDefaultController(NetworkClient.resetPasswordCheckValidity),
@@ -112,5 +118,8 @@ export const controllerMap = {
 	[EnumControllerName.controllerAccountDetail]: createDefaultController(NetworkClient.getAccountDetails),
 	[EnumControllerName.controllerAccountPassword]: createDefaultController(NetworkClient.changeAccountPassword),
 
-	[EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders)
+	[EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders),
+	[EnumControllerName.controllerGeos]: createDefaultController(NetworkClient.getCountries),
+
+	[EnumControllerName.controllerApplications]: createDefaultController(NetworkClient.getApplications)
 };

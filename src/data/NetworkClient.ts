@@ -11,6 +11,7 @@ import {RequestResetPasswordSend} from "./requests/RequestResetPasswordSend";
 import {RequestResetPasswordChangePassword} from "./requests/RequestResetPasswordChangePassword";
 import {RequestResetPasswordCheckValidity} from "./requests/RequestResetPasswordCheckValidity";
 import {RequestAccountChangePassword} from "./requests/RequestAccountChangePassword";
+import {RequestPathGeosChildren} from "./requests/RequestPathGeosChildren";
 
 class NetworkClient {
 
@@ -89,6 +90,20 @@ class NetworkClient {
 		return {} as AxiosResponse;
 	}
 
+	@GET(EnumServerRoutes.GEOS)
+	async getCountries(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
+		return {} as AxiosResponse;
+	}
+
+	@GET(EnumServerRoutes.GEOS_CHILDREN)
+	async getCountriesChildren(options: { axiosConfig?: AxiosRequestConfig, pathParams: RequestPathGeosChildren }): Promise<AxiosResponse> {
+		return {} as AxiosResponse;
+	}
+
+	@GET(EnumServerRoutes.APPLICATIONS)
+	async getApplications(options: { axiosConfig?: AxiosRequestConfig, pathParams: RequestPathGeosChildren }): Promise<AxiosResponse> {
+		return {} as AxiosResponse;
+	}
 }
 
 export default new NetworkClient();
