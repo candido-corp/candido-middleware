@@ -24,20 +24,14 @@ const routes: RouteConfigInterface[] = [
 	{
 		access: EnumControllerType.PUBLIC,
 		method: 'post',
-		path: '/api/v1/auth/register/email',
-		controller: EnumControllerName.controllerRegisterEmail
+		path: '/api/v1/auth/register',
+		controller: EnumControllerName.controllerRegister
 	},
 	{
 		access: EnumControllerType.PUBLIC,
 		method: 'post',
 		path: '/api/v1/auth/register/verify',
 		controller: EnumControllerName.controllerRegisterVerify
-	},
-	{
-		access: EnumControllerType.PUBLIC,
-		method: 'post',
-		path: '/api/v1/auth/register/code',
-		controller: EnumControllerName.controllerRegisterCode
 	},
 	{
 		access: EnumControllerType.PUBLIC,

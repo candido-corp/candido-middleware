@@ -6,6 +6,7 @@ import {setLogoutData} from "../../utils/setLogoutData";
 import {EnumControllerName} from "../../data/enums/EnumControllerName";
 import {AxiosResponse} from "axios";
 import {RequestRegisterVerify, RequestRegisterVerifyType} from "../../data/requests/RequestRegisterVerify";
+import {RequestRegister, RequestRegisterType} from "../../data/requests/RequestRegister";
 
 /**
  * Original API call
@@ -78,24 +79,31 @@ export const controllerMap = {
 	[EnumControllerName.controllerResetPasswordChangePassword]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
 		const response = await originalApiCall(req, NetworkClient.resetPasswordChangePassword);
 		setLoginData(req, res, response.data);
-		return callResponse(response.status, response.data);
+		return callResponse(StatusCodes.NO_CONTENT, null);
 	},
 
-	[EnumControllerName.controllerRegisterEmail]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
-		const response = await originalApiCall(req, NetworkClient.registerEmail);
+	[EnumControllerName.controllerRegister]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+		const request: RequestRegister = req.body;
+		const method: Function = request.a == RequestRegisterType.EMAIL ?
+			NetworkClient.registerEmail : NetworkClient.registerCode;
+
+		const response = await originalApiCall(req, method);
 		setLoginData(req, res, response.data)
-		return callResponse(StatusCodes.NO_CONTENT, null);
+		return request.a == RequestRegisterType.EMAIL ?
+			callResponse(StatusCodes.NO_CONTENT, null) :
+			callResponse(StatusCodes.OK, response.data);
 	},
 
 	[EnumControllerName.controllerRegisterVerify]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
 		const request: RequestRegisterVerify = req.body;
-		const method: Function = request.a == RequestRegisterVerifyType.EMAIL ? NetworkClient.registerEmailVerify : NetworkClient.registerCodeVerify;
+		const method: Function = request.a == RequestRegisterVerifyType.EMAIL ?
+			NetworkClient.registerEmailVerify : NetworkClient.registerCodeVerify;
+
 		const response = await originalApiCall(req, method);
 		setLoginData(req, res, response.data)
 		return callResponse(StatusCodes.NO_CONTENT, null);
 	},
 
-	[EnumControllerName.controllerRegisterCode]: createDefaultController(NetworkClient.registerCode),
 	[EnumControllerName.controllerRegisterCodeResend]: createDefaultController(NetworkClient.registerCodeResend),
 	[EnumControllerName.controllerResetPasswordSend]: createDefaultController(NetworkClient.resetPasswordSend),
 	[EnumControllerName.controllerResetPasswordCheckValidity]: createDefaultController(NetworkClient.resetPasswordCheckValidity),
