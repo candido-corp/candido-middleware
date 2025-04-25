@@ -45,6 +45,11 @@ class NetworkClient {
 		return {} as AxiosResponse<ResponseRegisterCode>;
 	}
 
+	@POST(EnumServerRoutes.REGISTER_EMAIL_RESEND)
+	async registerEmailResend(options: { data: RequestRegisterCodeResend }): Promise<AxiosResponse> {
+		return {} as AxiosResponse;
+	}
+
 	@POST(EnumServerRoutes.REGISTER_CODE_RESEND)
 	async registerCodeResend(options: { data: RequestRegisterCodeResend }): Promise<AxiosResponse> {
 		return {} as AxiosResponse;

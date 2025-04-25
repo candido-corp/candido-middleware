@@ -34,6 +34,12 @@ const routes: RouteConfigInterface[] = [
 		controller: EnumControllerName.controllerRegisterVerify
 	},
 	{
+		access: EnumControllerType.PROTECTED,
+		method: 'post',
+		path: '/api/v1/auth/register/email/resend',
+		controller: EnumControllerName.controllerRegisterEmailResend
+	},
+	{
 		access: EnumControllerType.PUBLIC,
 		method: 'post',
 		path: '/api/v1/auth/register/code/resend',

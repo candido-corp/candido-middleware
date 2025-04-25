@@ -110,6 +110,7 @@ export const controllerMap = {
 		return callResponse(response.status, response.data);
 	},
 
+	[EnumControllerName.controllerRegisterEmailResend]: createDefaultController(NetworkClient.registerEmailResend),
 	[EnumControllerName.controllerRegisterCodeResend]: createDefaultController(NetworkClient.registerCodeResend),
 	[EnumControllerName.controllerResetPasswordSend]: createDefaultController(NetworkClient.resetPasswordSend),
 	[EnumControllerName.controllerResetPasswordCheckValidity]: createDefaultController(NetworkClient.resetPasswordCheckValidity),
