@@ -7,6 +7,7 @@ export enum EnumServerRoutes {
 
 	REGISTER_EMAIL = API_V1 + "/auth/register/email",
 	REGISTER_EMAIL_VERIFY = API_V1 + "/auth/register/email/verify",
+	REGISTER_EMAIL_RESEND = API_V1 + "/auth/register/email/resend",
 
 	REGISTER_CODE = API_V1 + "/auth/register/code",
 	REGISTER_CODE_VERIFY = API_V1 + "/auth/register/code/verify",
