@@ -1,7 +1,25 @@
+# Environment / sensitive files
 .env
-.gitignore
-.nvmrc
-README.md
+.env.*
+
+# Local development configs
 .vscode
-.git
 .idea
+.nvmrc
+
+# Version control
+.git
+.gitignore
+
+# Build output
+dist
+build
+
+# Dependencies installed in container
+node_modules
+
+# Other unnecessary files
+README.md
+Dockerfile
+tsconfig.tsbuildinfo
+*.log
