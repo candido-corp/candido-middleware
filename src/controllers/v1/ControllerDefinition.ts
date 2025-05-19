@@ -1,10 +1,10 @@
-import { NextFunction } from "express";
+import {NextFunction} from "express";
 import NetworkClient from "../../data/NetworkClient";
-import { StatusCodes } from "http-status-codes";
-import { setLoginData } from "../../utils/setLoginData";
-import { setLogoutData } from "../../utils/setLogoutData";
-import { EnumControllerName } from "../../data/enums/EnumControllerName";
-import { AxiosResponse } from "axios";
+import {StatusCodes} from "http-status-codes";
+import {setLoginData} from "../../utils/setLoginData";
+import {setLogoutData} from "../../utils/setLogoutData";
+import {EnumControllerName} from "../../data/enums/EnumControllerName";
+import {AxiosResponse} from "axios";
 import {
   RequestRegisterVerify,
   RequestRegisterVerifyType,
@@ -23,12 +23,12 @@ export const originalApiCall = async (
   req: any,
   func?: Function
 ): Promise<AxiosResponse> => {
-  let { axiosConfig } = req;
+  let {axiosConfig} = req;
   return await func?.bind(NetworkClient)({
-    ...(axiosConfig && { axiosConfig: axiosConfig }),
-    ...(req.body && { data: req.body }),
-    ...(req.query && { params: req.query }),
-    ...(req.params && { pathParams: { ...req.params } }),
+    ...(axiosConfig && {axiosConfig: axiosConfig}),
+    ...(req.body && {data: req.body}),
+    ...(req.query && {params: req.query}),
+    ...(req.params && {pathParams: {...req.params}}),
   });
 };
 
@@ -57,12 +57,7 @@ export const callResponse = (status: any, data: any): CallResponseType => {
  * @param func - The function to call
  */
 function createDefaultController(func: Function) {
-  return async (
-    req: any,
-    res: any,
-    next: NextFunction,
-    originalApiCall: Function
-  ) => {
+  return async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
     let response = await originalApiCall(req, func);
     return callResponse(response.status, response.data);
   };
@@ -72,59 +67,31 @@ function createDefaultController(func: Function) {
  * Controller map
  */
 export const controllerMap = {
-  [EnumControllerName.controllerLogin]: async (
-    req: any,
-    res: any,
-    next: NextFunction,
-    originalApiCall: Function
-  ) => {
+  [EnumControllerName.controllerLogin]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
     const response = await originalApiCall(req, NetworkClient.login);
     setLoginData(req, res, response.data);
     return callResponse(StatusCodes.NO_CONTENT, null);
   },
 
-  [EnumControllerName.controllerLogout]: async (
-    req: any,
-    res: any,
-    next: NextFunction,
-    originalApiCall: Function
-  ) => {
+  [EnumControllerName.controllerLogout]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
     const response = await originalApiCall(req, NetworkClient.logout);
     setLogoutData(res);
     return callResponse(response.status, response.data);
   },
 
-  [EnumControllerName.controllerRefreshToken]: async (
-    req: any,
-    res: any,
-    next: NextFunction,
-    originalApiCall: Function
-  ) => {
+  [EnumControllerName.controllerRefreshToken]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
     const response = await originalApiCall(req, NetworkClient.refreshToken);
     setLoginData(req, res, response.data);
     return callResponse(StatusCodes.NO_CONTENT, null);
   },
 
-  [EnumControllerName.controllerResetPasswordChangePassword]: async (
-    req: any,
-    res: any,
-    next: NextFunction,
-    originalApiCall: Function
-  ) => {
-    const response = await originalApiCall(
-      req,
-      NetworkClient.resetPasswordChangePassword
-    );
+  [EnumControllerName.controllerResetPasswordChangePassword]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+    const response = await originalApiCall(req, NetworkClient.resetPasswordChangePassword);
     setLoginData(req, res, response.data);
     return callResponse(StatusCodes.NO_CONTENT, null);
   },
 
-  [EnumControllerName.controllerRegister]: async (
-    req: any,
-    res: any,
-    next: NextFunction,
-    originalApiCall: Function
-  ) => {
+  [EnumControllerName.controllerRegister]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
     const request: RequestRegister = req.body;
     const method: Function =
       request.a == RequestRegisterType.EMAIL
@@ -138,12 +105,7 @@ export const controllerMap = {
       : callResponse(StatusCodes.OK, response.data);
   },
 
-  [EnumControllerName.controllerRegisterVerify]: async (
-    req: any,
-    res: any,
-    next: NextFunction,
-    originalApiCall: Function
-  ) => {
+  [EnumControllerName.controllerRegisterVerify]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
     const request: RequestRegisterVerify = req.body;
     const method: Function =
       request.a == RequestRegisterVerifyType.EMAIL
@@ -155,52 +117,23 @@ export const controllerMap = {
     return callResponse(StatusCodes.NO_CONTENT, null);
   },
 
-  [EnumControllerName.controllerGeosChildren]: async (
-    req: any,
-    res: any,
-    next: NextFunction,
-    originalApiCall: Function
-  ) => {
-    const response = await originalApiCall(
-      req,
-      NetworkClient.getCountriesChildren
-    );
+  [EnumControllerName.controllerGeosChildren]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
+    const response = await originalApiCall(req, NetworkClient.getCountriesChildren);
     return callResponse(response.status, response.data);
   },
 
-  [EnumControllerName.controllerRegisterEmailResend]: createDefaultController(
-    NetworkClient.registerEmailResend
-  ),
-  [EnumControllerName.controllerRegisterCodeResend]: createDefaultController(
-    NetworkClient.registerCodeResend
-  ),
-  [EnumControllerName.controllerResetPasswordSend]: createDefaultController(
-    NetworkClient.resetPasswordSend
-  ),
-  [EnumControllerName.controllerResetPasswordCheckValidity]:
-    createDefaultController(NetworkClient.resetPasswordCheckValidity),
+  [EnumControllerName.controllerRegisterEmailResend]: createDefaultController(NetworkClient.registerEmailResend),
+  [EnumControllerName.controllerRegisterCodeResend]: createDefaultController(NetworkClient.registerCodeResend),
+  [EnumControllerName.controllerResetPasswordSend]: createDefaultController(NetworkClient.resetPasswordSend),
+  [EnumControllerName.controllerResetPasswordCheckValidity]: createDefaultController(NetworkClient.resetPasswordCheckValidity),
 
-  [EnumControllerName.controllerAccount]: createDefaultController(
-    NetworkClient.getAccount
-  ),
-  [EnumControllerName.controllerAccountDetail]: createDefaultController(
-    NetworkClient.getAccountDetails
-  ),
-  [EnumControllerName.controllerAccountChangeDetail]: createDefaultController(
-    NetworkClient.changeAccountDetails
-  ),
-  [EnumControllerName.controllerAccountPassword]: createDefaultController(
-    NetworkClient.changeAccountPassword
-  ),
+  [EnumControllerName.controllerAccount]: createDefaultController(NetworkClient.getAccount),
+  [EnumControllerName.controllerAccountDetail]: createDefaultController(NetworkClient.getAccountDetails),
+  [EnumControllerName.controllerAccountChangeDetail]: createDefaultController(NetworkClient.changeAccountDetails),
+  [EnumControllerName.controllerAccountPassword]: createDefaultController(NetworkClient.changeAccountPassword),
 
-  [EnumControllerName.controllerGender]: createDefaultController(
-    NetworkClient.getGenders
-  ),
-  [EnumControllerName.controllerGeos]: createDefaultController(
-    NetworkClient.getCountries
-  ),
+  [EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders),
+  [EnumControllerName.controllerGeos]: createDefaultController(NetworkClient.getCountries),
 
-  [EnumControllerName.controllerApplications]: createDefaultController(
-    NetworkClient.getApplications
-  ),
+  [EnumControllerName.controllerApplications]: createDefaultController(NetworkClient.getApplications),
 };
