@@ -90,6 +90,30 @@ const routes: RouteConfigInterface[] = [
   {
     access: EnumControllerType.PROTECTED,
     method: "get",
+    path: "/api/v1/me/details/addresses",
+    controller: EnumControllerName.controllerAccountAddresses,
+  },
+  {
+    access: EnumControllerType.PROTECTED,
+    method: "post",
+    path: "/api/v1/me/details/addresses",
+    controller: EnumControllerName.controllerAccountAddressesAdd,
+  },
+  {
+    access: EnumControllerType.PROTECTED,
+    method: "put",
+    path: "/api/v1/me/details/addresses/:addressId",
+    controller: EnumControllerName.controllerAccountAddressChange,
+  },
+  {
+    access: EnumControllerType.PROTECTED,
+    method: "delete",
+    path: "/api/v1/me/details/addresses/:addressId",
+    controller: EnumControllerName.controllerAccountAddressDelete,
+  },
+  {
+    access: EnumControllerType.PROTECTED,
+    method: "get",
     path: "/api/v1/geos",
     controller: EnumControllerName.controllerGeos,
   },

@@ -1,30 +1,32 @@
 export enum EnumServerRoutes {
-	API_V1 = "/api/v1",
+  API_V1 = "/api/v1",
 
-	LOGIN = API_V1 + "/auth/login",
-	LOGOUT = API_V1 + "/auth/logout",
-	REFRESH_TOKEN = API_V1 + "/auth/token/refresh",
+  LOGIN = API_V1 + "/auth/login",
+  LOGOUT = API_V1 + "/auth/logout",
+  REFRESH_TOKEN = API_V1 + "/auth/token/refresh",
 
-	REGISTER_EMAIL = API_V1 + "/auth/register/email",
-	REGISTER_EMAIL_VERIFY = API_V1 + "/auth/register/email/verify",
-	REGISTER_EMAIL_RESEND = API_V1 + "/auth/register/email/resend",
+  REGISTER_EMAIL = API_V1 + "/auth/register/email",
+  REGISTER_EMAIL_VERIFY = API_V1 + "/auth/register/email/verify",
+  REGISTER_EMAIL_RESEND = API_V1 + "/auth/register/email/resend",
 
-	REGISTER_CODE = API_V1 + "/auth/register/code",
-	REGISTER_CODE_VERIFY = API_V1 + "/auth/register/code/verify",
-	REGISTER_CODE_RESEND = API_V1 + "/auth/register/code/resend",
+  REGISTER_CODE = API_V1 + "/auth/register/code",
+  REGISTER_CODE_VERIFY = API_V1 + "/auth/register/code/verify",
+  REGISTER_CODE_RESEND = API_V1 + "/auth/register/code/resend",
 
-	RESET_PASSWORD_SEND = API_V1 + "/auth/reset-password/send",
-	RESET_PASSWORD_CHANGE_PASSWORD = API_V1 + "/auth/reset-password/change-password",
-	RESET_PASSWORD_CHECK_VALIDITY = API_V1 + "/auth/reset-password/check-validity",
+  RESET_PASSWORD_SEND = API_V1 + "/auth/reset-password/send",
+  RESET_PASSWORD_CHANGE_PASSWORD = API_V1 + "/auth/reset-password/change-password",
+  RESET_PASSWORD_CHECK_VALIDITY = API_V1 + "/auth/reset-password/check-validity",
 
-	ACCOUNT = API_V1 + "/me",
-	ACCOUNT_DETAILS = API_V1 + "/me/details",
-	ACCOUNT_PASSWORD = API_V1 + "/me/password",
+  ACCOUNT = API_V1 + "/me",
+  ACCOUNT_PASSWORD = API_V1 + "/me/password",
+  ACCOUNT_DETAILS = API_V1 + "/me/details",
+  ACCOUNT_DETAILS_ADDRESSES = API_V1 + "/me/details/addresses",
+  ACCOUNT_DETAILS_ADDRESS = API_V1 + "/me/details/addresses/:addressId",
 
-	GENDERS = API_V1 + "/genders",
+  GENDERS = API_V1 + "/genders",
 
-	GEOS = API_V1 + "/geos",
-	GEOS_CHILDREN = API_V1 + "/geos/:geoId/children",
+  GEOS = API_V1 + "/geos",
+  GEOS_CHILDREN = API_V1 + "/geos/:geoId/children",
 
-	APPLICATIONS = API_V1 + "/me/applications"
+  APPLICATIONS = API_V1 + "/me/applications",
 }
