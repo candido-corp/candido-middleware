@@ -1,9 +1,10 @@
 name: Publish candido-middleware
+
 on:
   pull_request:
-    branches: 
-        - main
-        - develop
+    branches:
+      - main
+      - develop
     types: [closed]
 
 jobs:
@@ -24,8 +25,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set image tag based on base branch
+        id: vars
+        run: |
+          if [[ "${{ github.base_ref }}" == "main" ]]; then
+            echo "TAG=prod" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.base_ref }}" == "develop" ]]; then
+            echo "TAG=dev" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and push Docker image
         run: |
           IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/candido-middleware
-          docker build -t $IMAGE_NAME:latest . 
-          docker push $IMAGE_NAME:latest
+          TAG=${{ steps.vars.outputs.TAG }}
+          docker build -t $IMAGE_NAME:$TAG .
+          docker push $IMAGE_NAME:$TAG
