@@ -1,4 +1,4 @@
-import { GET, POST, PUT } from "./NetworkCallDecorator";
+import { GET, POST, PUT, DELETE } from "./NetworkCallDecorator";
 import { EnumServerRoutes } from "./enums/EnumServerRoutes";
 import { ResponseLoginData } from "./responses/ResponseLoginData";
 import { RequestLogin } from "./requests/RequestLogin";
@@ -13,12 +13,11 @@ import { RequestResetPasswordCheckValidity } from "./requests/RequestResetPasswo
 import { RequestAccountChangePassword } from "./requests/RequestAccountChangePassword";
 import { RequestPathGeosChildren } from "./requests/RequestPathGeosChildren";
 import { RequestAccountChangeDetails } from "./requests/RequestAccountChangeDetails";
+import { RequestAccountDetailsAddress } from "./requests/RequestAccountDetailsAddress";
 
 class NetworkClient {
   @POST(EnumServerRoutes.LOGIN)
-  async login(options: {
-    data: RequestLogin;
-  }): Promise<AxiosResponse<ResponseLoginData>> {
+  async login(options: { data: RequestLogin }): Promise<AxiosResponse<ResponseLoginData>> {
     return {} as AxiosResponse<ResponseLoginData>;
   }
 
@@ -28,132 +27,112 @@ class NetworkClient {
   }
 
   @POST(EnumServerRoutes.REFRESH_TOKEN)
-  async refreshToken(options: {
-    axiosConfig?: AxiosRequestConfig;
-  }): Promise<AxiosResponse<ResponseLoginData>> {
+  async refreshToken(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse<ResponseLoginData>> {
     return {} as AxiosResponse<ResponseLoginData>;
   }
 
   @POST(EnumServerRoutes.REGISTER_EMAIL)
-  async registerEmail(options: {
-    data: RequestRegister;
-  }): Promise<AxiosResponse> {
+  async registerEmail(options: { data: RequestRegister }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @POST(EnumServerRoutes.REGISTER_EMAIL_VERIFY)
-  async registerEmailVerify(options: {
-    data: RequestRegisterVerify;
-  }): Promise<AxiosResponse> {
+  async registerEmailVerify(options: { data: RequestRegisterVerify }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @POST(EnumServerRoutes.REGISTER_CODE)
-  async registerCode(options: {
-    data: RequestRegister;
-  }): Promise<AxiosResponse<ResponseRegisterCode>> {
+  async registerCode(options: { data: RequestRegister }): Promise<AxiosResponse<ResponseRegisterCode>> {
     return {} as AxiosResponse<ResponseRegisterCode>;
   }
 
   @POST(EnumServerRoutes.REGISTER_EMAIL_RESEND)
-  async registerEmailResend(options: {
-    data: RequestRegisterCodeResend;
-  }): Promise<AxiosResponse> {
+  async registerEmailResend(options: { data: RequestRegisterCodeResend }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @POST(EnumServerRoutes.REGISTER_CODE_RESEND)
-  async registerCodeResend(options: {
-    data: RequestRegisterCodeResend;
-  }): Promise<AxiosResponse> {
+  async registerCodeResend(options: { data: RequestRegisterCodeResend }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @POST(EnumServerRoutes.REGISTER_CODE_VERIFY)
-  async registerCodeVerify(options: {
-    data: RequestRegisterVerify;
-  }): Promise<AxiosResponse> {
+  async registerCodeVerify(options: { data: RequestRegisterVerify }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @POST(EnumServerRoutes.RESET_PASSWORD_SEND)
-  async resetPasswordSend(options: {
-    data: RequestResetPasswordSend;
-  }): Promise<AxiosResponse> {
+  async resetPasswordSend(options: { data: RequestResetPasswordSend }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @GET(EnumServerRoutes.RESET_PASSWORD_CHECK_VALIDITY)
-  async resetPasswordCheckValidity(options: {
-    params: RequestResetPasswordCheckValidity;
-  }): Promise<AxiosResponse> {
+  async resetPasswordCheckValidity(options: { params: RequestResetPasswordCheckValidity }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @POST(EnumServerRoutes.RESET_PASSWORD_CHANGE_PASSWORD)
-  async resetPasswordChangePassword(options: {
-    data: RequestResetPasswordChangePassword;
-  }): Promise<AxiosResponse<ResponseLoginData>> {
+  async resetPasswordChangePassword(options: { data: RequestResetPasswordChangePassword }): Promise<AxiosResponse<ResponseLoginData>> {
     return {} as AxiosResponse<ResponseLoginData>;
   }
 
   @GET(EnumServerRoutes.ACCOUNT)
-  async getAccount(options: {
-    axiosConfig?: AxiosRequestConfig;
-  }): Promise<AxiosResponse> {
+  async getAccount(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @GET(EnumServerRoutes.ACCOUNT_DETAILS)
-  async getAccountDetails(options: {
-    axiosConfig?: AxiosRequestConfig;
-  }): Promise<AxiosResponse> {
+  async getAccountDetails(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @PUT(EnumServerRoutes.ACCOUNT_DETAILS)
-  async changeAccountDetails(options: {
-    axiosConfig?: AxiosRequestConfig;
-    data: RequestAccountChangeDetails;
-  }): Promise<AxiosResponse> {
+  async changeAccountDetails(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountChangeDetails }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
+  @GET(EnumServerRoutes.ACCOUNT_DETAILS_ADDRESSES)
+  async getAccountDetailsAddresses(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
+  @POST(EnumServerRoutes.ACCOUNT_DETAILS_ADDRESSES)
+  async addAccountDetailsAddress(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountDetailsAddress }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
+  @PUT(EnumServerRoutes.ACCOUNT_DETAILS_ADDRESS)
+  async changeAccountDetailsAddress(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountDetailsAddress }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
+  @DELETE(EnumServerRoutes.ACCOUNT_DETAILS_ADDRESS)
+  async deleteAccountDetailsAddress(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @PUT(EnumServerRoutes.ACCOUNT_PASSWORD)
-  async changeAccountPassword(options: {
-    axiosConfig?: AxiosRequestConfig;
-    data: RequestAccountChangePassword;
-  }): Promise<AxiosResponse> {
+  async changeAccountPassword(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountChangePassword }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @GET(EnumServerRoutes.GENDERS)
-  async getGenders(options: {
-    axiosConfig?: AxiosRequestConfig;
-  }): Promise<AxiosResponse> {
+  async getGenders(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @GET(EnumServerRoutes.GEOS)
-  async getCountries(options: {
-    axiosConfig?: AxiosRequestConfig;
-  }): Promise<AxiosResponse> {
+  async getCountries(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @GET(EnumServerRoutes.GEOS_CHILDREN)
-  async getCountriesChildren(options: {
-    axiosConfig?: AxiosRequestConfig;
-    pathParams: RequestPathGeosChildren;
-  }): Promise<AxiosResponse> {
+  async getCountriesChildren(options: { axiosConfig?: AxiosRequestConfig; pathParams: RequestPathGeosChildren }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
   @GET(EnumServerRoutes.APPLICATIONS)
-  async getApplications(options: {
-    axiosConfig?: AxiosRequestConfig;
-    pathParams: RequestPathGeosChildren;
-  }): Promise<AxiosResponse> {
+  async getApplications(options: { axiosConfig?: AxiosRequestConfig; pathParams: RequestPathGeosChildren }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 }

@@ -1,34 +1,25 @@
-import {NextFunction} from "express";
+import { NextFunction } from "express";
 import NetworkClient from "../../data/NetworkClient";
-import {StatusCodes} from "http-status-codes";
-import {setLoginData} from "../../utils/setLoginData";
-import {setLogoutData} from "../../utils/setLogoutData";
-import {EnumControllerName} from "../../data/enums/EnumControllerName";
-import {AxiosResponse} from "axios";
-import {
-  RequestRegisterVerify,
-  RequestRegisterVerifyType,
-} from "../../data/requests/RequestRegisterVerify";
-import {
-  RequestRegister,
-  RequestRegisterType,
-} from "../../data/requests/RequestRegister";
+import { StatusCodes } from "http-status-codes";
+import { setLoginData } from "../../utils/setLoginData";
+import { setLogoutData } from "../../utils/setLogoutData";
+import { EnumControllerName } from "../../data/enums/EnumControllerName";
+import { AxiosResponse } from "axios";
+import { RequestRegisterVerify, RequestRegisterVerifyType } from "../../data/requests/RequestRegisterVerify";
+import { RequestRegister, RequestRegisterType } from "../../data/requests/RequestRegister";
 
 /**
  * Original API call
  * @param req - The request
  * @param func - The function to call
  */
-export const originalApiCall = async (
-  req: any,
-  func?: Function
-): Promise<AxiosResponse> => {
-  let {axiosConfig} = req;
+export const originalApiCall = async (req: any, func?: Function): Promise<AxiosResponse> => {
+  let { axiosConfig } = req;
   return await func?.bind(NetworkClient)({
-    ...(axiosConfig && {axiosConfig: axiosConfig}),
-    ...(req.body && {data: req.body}),
-    ...(req.query && {params: req.query}),
-    ...(req.params && {pathParams: {...req.params}}),
+    ...(axiosConfig && { axiosConfig: axiosConfig }),
+    ...(req.body && { data: req.body }),
+    ...(req.query && { params: req.query }),
+    ...(req.params && { pathParams: { ...req.params } }),
   });
 };
 
@@ -93,24 +84,16 @@ export const controllerMap = {
 
   [EnumControllerName.controllerRegister]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
     const request: RequestRegister = req.body;
-    const method: Function =
-      request.a == RequestRegisterType.EMAIL
-        ? NetworkClient.registerEmail
-        : NetworkClient.registerCode;
+    const method: Function = request.a == RequestRegisterType.EMAIL ? NetworkClient.registerEmail : NetworkClient.registerCode;
 
     const response = await originalApiCall(req, method);
     setLoginData(req, res, response.data);
-    return request.a == RequestRegisterType.EMAIL
-      ? callResponse(StatusCodes.NO_CONTENT, null)
-      : callResponse(StatusCodes.OK, response.data);
+    return request.a == RequestRegisterType.EMAIL ? callResponse(StatusCodes.NO_CONTENT, null) : callResponse(StatusCodes.OK, response.data);
   },
 
   [EnumControllerName.controllerRegisterVerify]: async (req: any, res: any, next: NextFunction, originalApiCall: Function) => {
     const request: RequestRegisterVerify = req.body;
-    const method: Function =
-      request.a == RequestRegisterVerifyType.EMAIL
-        ? NetworkClient.registerEmailVerify
-        : NetworkClient.registerCodeVerify;
+    const method: Function = request.a == RequestRegisterVerifyType.EMAIL ? NetworkClient.registerEmailVerify : NetworkClient.registerCodeVerify;
 
     const response = await originalApiCall(req, method);
     setLoginData(req, res, response.data);
@@ -130,6 +113,10 @@ export const controllerMap = {
   [EnumControllerName.controllerAccount]: createDefaultController(NetworkClient.getAccount),
   [EnumControllerName.controllerAccountDetail]: createDefaultController(NetworkClient.getAccountDetails),
   [EnumControllerName.controllerAccountChangeDetail]: createDefaultController(NetworkClient.changeAccountDetails),
+  [EnumControllerName.controllerAccountAddresses]: createDefaultController(NetworkClient.getAccountDetailsAddresses),
+  [EnumControllerName.controllerAccountAddressesAdd]: createDefaultController(NetworkClient.addAccountDetailsAddress),
+  [EnumControllerName.controllerAccountAddressChange]: createDefaultController(NetworkClient.changeAccountDetailsAddress),
+  [EnumControllerName.controllerAccountAddressDelete]: createDefaultController(NetworkClient.deleteAccountDetailsAddress),
   [EnumControllerName.controllerAccountPassword]: createDefaultController(NetworkClient.changeAccountPassword),
 
   [EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders),
