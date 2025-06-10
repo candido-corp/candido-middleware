@@ -14,6 +14,7 @@ import { RequestAccountChangePassword } from "./requests/RequestAccountChangePas
 import { RequestPathGeosChildren } from "./requests/RequestPathGeosChildren";
 import { RequestAccountChangeDetails } from "./requests/RequestAccountChangeDetails";
 import { RequestAccountDetailsAddress } from "./requests/RequestAccountDetailsAddress";
+import { RequestAccountSettings } from "./requests/RequestAccountSettings";
 
 class NetworkClient {
   @POST(EnumServerRoutes.LOGIN)
@@ -128,6 +129,11 @@ class NetworkClient {
 
   @GET(EnumServerRoutes.GEOS_CHILDREN)
   async getCountriesChildren(options: { axiosConfig?: AxiosRequestConfig; pathParams: RequestPathGeosChildren }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
+  @PUT(EnumServerRoutes.ACCOUNT_SETTINGS)
+  async changeAccountSettings(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountSettings }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 
