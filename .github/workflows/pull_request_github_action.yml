@@ -2,9 +2,6 @@ name: Build candido-middleware
 
 on:
   pull_request:
-    paths:
-      - 'candido-middleware/**'
-      - '.github/workflows/pull_request_github_action.yml'
 
 jobs:
   build:
