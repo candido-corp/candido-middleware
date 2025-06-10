@@ -132,6 +132,11 @@ class NetworkClient {
     return {} as AxiosResponse;
   }
 
+  @GET(EnumServerRoutes.GEOS_ADDRESS_TYPES)
+  async getAddressTypes(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
   @PUT(EnumServerRoutes.ACCOUNT_SETTINGS)
   async changeAccountSettings(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountSettings }): Promise<AxiosResponse> {
     return {} as AxiosResponse;

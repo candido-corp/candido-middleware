@@ -28,6 +28,7 @@ export enum EnumServerRoutes {
 
   GEOS = API_V1 + "/geos",
   GEOS_CHILDREN = API_V1 + "/geos/:geoId/children",
+  GEOS_ADDRESS_TYPES = API_V1 + "/geos/address-types",
 
   APPLICATIONS = API_V1 + "/me/applications",
 }

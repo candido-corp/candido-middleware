@@ -122,6 +122,7 @@ export const controllerMap = {
 
   [EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders),
   [EnumControllerName.controllerGeos]: createDefaultController(NetworkClient.getCountries),
+  [EnumControllerName.controllerGeosAddressTypes]: createDefaultController(NetworkClient.getAddressTypes),
 
   [EnumControllerName.controllerApplications]: createDefaultController(NetworkClient.getApplications),
 };
