@@ -137,6 +137,11 @@ class NetworkClient {
     return {} as AxiosResponse;
   }
 
+  @GET(EnumServerRoutes.ACCOUNT_SETTINGS)
+  async getAccountSettings(options: { axiosConfig?: AxiosRequestConfig }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
   @PUT(EnumServerRoutes.ACCOUNT_SETTINGS)
   async changeAccountSettings(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountSettings }): Promise<AxiosResponse> {
     return {} as AxiosResponse;

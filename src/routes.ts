@@ -137,9 +137,15 @@ const routes: RouteConfigInterface[] = [
   },
   {
     access: EnumControllerType.PROTECTED,
-    method: "put",
+    method: "get",
     path: "/api/v1/me/settings",
     controller: EnumControllerName.controllerAccountSettings,
+  },
+  {
+    access: EnumControllerType.PROTECTED,
+    method: "put",
+    path: "/api/v1/me/settings",
+    controller: EnumControllerName.controllerAccountSettingsChange,
   },
   {
     access: EnumControllerType.PROTECTED,

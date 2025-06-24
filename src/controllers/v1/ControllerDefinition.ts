@@ -118,7 +118,8 @@ export const controllerMap = {
   [EnumControllerName.controllerAccountAddressChange]: createDefaultController(NetworkClient.changeAccountDetailsAddress),
   [EnumControllerName.controllerAccountAddressDelete]: createDefaultController(NetworkClient.deleteAccountDetailsAddress),
   [EnumControllerName.controllerAccountPassword]: createDefaultController(NetworkClient.changeAccountPassword),
-  [EnumControllerName.controllerAccountSettings]: createDefaultController(NetworkClient.changeAccountSettings),
+  [EnumControllerName.controllerAccountSettings]: createDefaultController(NetworkClient.getAccountSettings),
+  [EnumControllerName.controllerAccountSettingsChange]: createDefaultController(NetworkClient.changeAccountSettings),
 
   [EnumControllerName.controllerGender]: createDefaultController(NetworkClient.getGenders),
   [EnumControllerName.controllerGeos]: createDefaultController(NetworkClient.getCountries),
