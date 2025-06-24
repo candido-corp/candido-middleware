@@ -113,6 +113,12 @@ const routes: RouteConfigInterface[] = [
   },
   {
     access: EnumControllerType.PROTECTED,
+    method: "put",
+    path: "/api/v1/me/details/addresses/:addressId/primary",
+    controller: EnumControllerName.controllerAccountAddressSetPrimary,
+  },
+  {
+    access: EnumControllerType.PROTECTED,
     method: "get",
     path: "/api/v1/geos",
     controller: EnumControllerName.controllerGeos,
