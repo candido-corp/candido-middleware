@@ -5,4 +5,5 @@ export type RequestAccountDetailsAddress = {
   street: string;
   house_number: string;
   is_primary: boolean;
+  display_name: string;
 };
