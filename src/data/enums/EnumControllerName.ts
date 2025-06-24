@@ -16,6 +16,7 @@ export enum EnumControllerName {
   controllerAccountAddressesAdd = "controllerAccountAddressesAdd",
   controllerAccountAddressChange = "controllerAccountAddressChange",
   controllerAccountAddressDelete = "controllerAccountAddressDelete",
+  controllerAccountAddressSetPrimary = "controllerAccountAddressSetPrimary",
   controllerAccountPassword = "controllerAccountPassword",
   controllerGender = "controllerGender",
   controllerGeos = "controllerGeos",

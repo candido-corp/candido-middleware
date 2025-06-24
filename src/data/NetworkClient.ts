@@ -112,6 +112,11 @@ class NetworkClient {
     return {} as AxiosResponse;
   }
 
+  @PUT(EnumServerRoutes.ACCOUNT_DETAILS_ADDRESS_PRIMARY)
+  async setPrimaryAccountDetailsAddress(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountDetailsAddress }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
   @PUT(EnumServerRoutes.ACCOUNT_PASSWORD)
   async changeAccountPassword(options: { axiosConfig?: AxiosRequestConfig; data: RequestAccountChangePassword }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
