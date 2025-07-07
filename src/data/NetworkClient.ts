@@ -15,6 +15,7 @@ import { RequestPathGeosChildren } from "./requests/RequestPathGeosChildren";
 import { RequestAccountChangeDetails } from "./requests/RequestAccountChangeDetails";
 import { RequestAccountDetailsAddress } from "./requests/RequestAccountDetailsAddress";
 import { RequestAccountSettings } from "./requests/RequestAccountSettings";
+import { RequestOpportunities } from "./requests/RequestOpportunities";
 
 class NetworkClient {
   @POST(EnumServerRoutes.LOGIN)
@@ -154,6 +155,11 @@ class NetworkClient {
 
   @GET(EnumServerRoutes.APPLICATIONS)
   async getApplications(options: { axiosConfig?: AxiosRequestConfig; pathParams: RequestPathGeosChildren }): Promise<AxiosResponse> {
+    return {} as AxiosResponse;
+  }
+
+  @GET(EnumServerRoutes.OPPORTUNITIES)
+  async getOpportunities(options: { axiosConfig?: AxiosRequestConfig; pathParams: RequestOpportunities }): Promise<AxiosResponse> {
     return {} as AxiosResponse;
   }
 }

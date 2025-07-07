@@ -25,4 +25,5 @@ export enum EnumControllerName {
   controllerAccountSettings = "controllerAccountSettings",
   controllerAccountSettingsChange = "controllerAccountSettingsChange",
   controllerApplications = "controllerApplications",
+  controllerOpportunities = "controllerOpportunities",
 }

@@ -32,4 +32,6 @@ export enum EnumServerRoutes {
   GEOS_ADDRESS_TYPES = API_V1 + "/geos/address-types",
 
   APPLICATIONS = API_V1 + "/me/applications",
+
+  OPPORTUNITIES = API_V1 + "/opportunities",
 }
