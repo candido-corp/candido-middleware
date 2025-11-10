@@ -1,0 +1,25 @@
+# Environment / sensitive files
+.env
+.env.*
+
+# Local development configs
+.vscode
+.idea
+.nvmrc
+
+# Version control
+.git
+.gitignore
+
+# Build output
+dist
+build
+
+# Dependencies installed in container
+node_modules
+
+# Other unnecessary files
+README.md
+Dockerfile
+tsconfig.tsbuildinfo
+*.log
